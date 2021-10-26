@@ -1,9 +1,24 @@
-<nb-list>
-  <nb-list-item *ngFor="let character of characters">
-    <div>
-      <h1>Hi</h1>
-      <p> {{character.name}}</p>
+<div class="row">
+  <div class="col-md-12 text-center">
+    <div class="characters-wrapper">
+      <nb-card class="characters-list">
+        <nb-card-body>
+          <nb-list>
+            <nb-list-item *ngFor="let character of characters | search:searchInput | sort: sortDirection : 'name'">
+              <div class="character-list-item">
+                <div class="character-info">
+                  <nb-user [picture]="getImgUrl(character.gender)" [name]="character.name"
+                    [title]="character.gender === 'Male' ? 'male' : 'female'" size="large"></nb-user>
+                </div>
+                <button class="details-btn" nbButton (click)="openDialog(character)">Details</button>
+              </div>
+            </nb-list-item>
+          </nb-list>
+          <div class="btn-more-container">
+            <button size="large" status="success" hero nbButton (click)="loadMoreData()">Load more Data...</button>
+          </div>
+        </nb-card-body>
+      </nb-card>
     </div>
 
-  </nb-list-item>
-</nb-list>
+  </div>

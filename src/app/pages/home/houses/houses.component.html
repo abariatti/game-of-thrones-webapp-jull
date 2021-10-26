@@ -1,1 +1,23 @@
-<p>houses works!</p>
+<div class="row">
+  <div class="col-md-12 text-center">
+    <div class="houses-wrapper">
+      <nb-card class="houses-list">
+        <nb-card-body>
+          <nb-list>
+            <nb-list-item *ngFor="let house of houses | search:searchInput">
+              <div class="house-list-item">
+                <div class="house-info">
+                  <nb-user [name]="house.name" title="TITLE" size="large"></nb-user>
+                </div>
+                <button class="details-btn" nbButton (click)="openDialog(house)">Details</button>
+              </div>
+            </nb-list-item>
+          </nb-list>
+          <div class="btn-more-container">
+            <button size="large" status="success" hero nbButton (click)="loadMoreData()">Load more Data...</button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+  </div>

@@ -1,4 +1,4 @@
-import { Character } from './character';
+import { House } from './house';
 import { Injectable } from '@angular/core';
 import { HttpClient, } from "@angular/common/http";
 import { Observable, of } from "rxjs";
@@ -10,13 +10,12 @@ import { extractPageNumberFromHeader } from 'src/app/shared/helpers/extract-page
 @Injectable({
   providedIn: 'root'
 })
-export class CharactersService {
+export class HousesService {
 
   _currentPageNumber = 1;
   _pageSize = 50; // max size stated on https://anapioficeandfire.com/Documentation
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   get currentPageNumber() {
     return this._currentPageNumber;
@@ -26,16 +25,16 @@ export class CharactersService {
     return this._pageSize;
   }
 
-  /** GET characters from the server and filter out characters that have no name */
-  getCharacters(): Observable<Character[]> {
-    return this.http.get<any>(`https://www.anapioficeandfire.com/api/characters?page=${this._currentPageNumber}&pageSize=${this._pageSize}`, { observe: 'response' })
+  /** GET houses from the server and filter out houses that have no name */
+  getHouses(): Observable<House[]> {
+    return this.http.get<any>(`https://www.anapioficeandfire.com/api/houses?page=${this._currentPageNumber}&pageSize=${this._pageSize}`, { observe: 'response' })
       .pipe(
         tap(val => {
           this._pageSize = extractPageNumberFromHeader(val.headers.get("link"));
           this._currentPageNumber++;
         }),
-        map(response => response.body.filter((character: { name: string | any[]; }) => character.name.length > 0)),
-        catchError(this.handleError<Character[]>('getCharacters', [])),
+        map(response => response.body.filter((house: { name: string | any[]; }) => house.name.length > 0)),
+        catchError(this.handleError<House[]>('getHouses', [])),
       )
   }
 
@@ -57,5 +56,4 @@ export class CharactersService {
       return of(result as T);
     };
   }
-
 }

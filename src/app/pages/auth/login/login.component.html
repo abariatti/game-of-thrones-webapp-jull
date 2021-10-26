@@ -1,0 +1,21 @@
+<nb-layout>
+  <nb-layout-column>
+    <nb-card id="card-login">
+      <nb-card-body id="body">
+        <img id="logo" src="../../../../assets/img/hero.jpg" alt="" />
+        <input [(ngModel)]="name" class="input-elements" type="text" nbInput placeholder="Name" fullWidth
+          fieldSize="giant" shape="semi-round" />
+        <input [(ngModel)]="password" class="input-elements" type="password" nbInput placeholder="Password" fullWidth
+          fieldSize="giant" shape="semi-round" />
+        <button class="input-elements" nbButton size="giant" shape="semi-round" fullWidth (click)="login()">
+          Login
+        </button>
+        <p *ngIf="loginFailed" class="msg-error">
+          Login fehlgeschlagen.
+        </p>
+
+
+      </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>

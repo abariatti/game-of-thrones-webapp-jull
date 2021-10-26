@@ -1,0 +1,19 @@
+.navbar-container {
+  box-sizing: border-box;
+  padding: 0 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+}
+
+
+.img-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  img {
+    height: 50px;
+  }
+}

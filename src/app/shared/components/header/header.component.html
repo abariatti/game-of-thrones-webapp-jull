@@ -1,0 +1,17 @@
+<div class="navbar-container">
+
+
+  <nb-toggle [(ngModel)]="isDarkMode" (checkedChange)="changeTheme()">Dark Mode</nb-toggle>
+
+  <div class="img-wrapper">
+    <img src="../../../../assets//img/logo.png" alt="">
+  </div>
+
+  <nb-actions size="small" fullWidth>
+    <nb-action class="user-action">
+      <nb-user size="large" name="Johannes" title="Pioneer" badgeText="active" badgeStatus="success"
+        badgePosition="bottom right">
+      </nb-user>
+    </nb-action>
+  </nb-actions>
+</div>

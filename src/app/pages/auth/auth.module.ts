@@ -1,15 +1,36 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthComponent } from './auth.component';
+import { FormsModule } from '@angular/forms';
+import { NbCardModule, NbLayoutModule, NbInputModule, NbButtonModule } from '@nebular/theme';
+import { RouterModule } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { NgModule } from '@angular/core';
 
-
+const routes = [
+  {
+    path: "",
+    component: LoginComponent,
+  },
+  {
+    path: "login",
+    component: LoginComponent,
+  },
+];
 
 @NgModule({
   declarations: [
-    AuthComponent
+    LoginComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule.forChild(routes),
+    NbCardModule,
+    NbCardModule,
+    NbLayoutModule,
+    NbInputModule,
+    FormsModule,
+    NbButtonModule,
   ]
 })
+
+
 export class AuthModule { }

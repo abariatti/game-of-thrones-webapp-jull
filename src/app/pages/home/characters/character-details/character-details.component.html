@@ -1,0 +1,11 @@
+<nb-card class="wrapper">
+  <nb-card-body>
+
+    <div *ngFor="let item of character | keyvalue">
+      <div *ngIf="item?.value?.length !== 0 && item?.value" class="item">
+        <button nbButton hero status="primary" class="item-key">{{item.key}}</button>
+        <div class="item-value">{{item.value}}</div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
