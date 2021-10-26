@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NbCardModule, NbLayoutModule, NbInputModule, NbButtonModule } from '@nebular/theme';
+import { NbCardModule, NbLayoutModule, NbInputModule, NbButtonModule, NbAlertModule } from '@nebular/theme';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
@@ -29,6 +29,7 @@ const routes = [
     NbInputModule,
     FormsModule,
     NbButtonModule,
+    NbAlertModule,
   ]
 })
 

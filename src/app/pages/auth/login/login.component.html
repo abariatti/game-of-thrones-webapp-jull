@@ -1,21 +1,30 @@
 <nb-layout>
   <nb-layout-column>
-    <nb-card id="card-login">
-      <nb-card-body id="body">
-        <img id="logo" src="../../../../assets/img/hero.jpg" alt="" />
-        <input [(ngModel)]="name" class="input-elements" type="text" nbInput placeholder="Name" fullWidth
-          fieldSize="giant" shape="semi-round" />
-        <input [(ngModel)]="password" class="input-elements" type="password" nbInput placeholder="Password" fullWidth
-          fieldSize="giant" shape="semi-round" />
-        <button class="input-elements" nbButton size="giant" shape="semi-round" fullWidth (click)="login()">
-          Login
-        </button>
-        <p *ngIf="loginFailed" class="msg-error">
-          Login fehlgeschlagen.
-        </p>
+    <div class="row">
+      <div class="col">
+        <nb-card id="card-login">
+          <nb-card-body id="body">
+            <nb-alert status="success">
+              Just use 123456 as a password
+            </nb-alert>
+            <img id="logo" src="../../../../assets/img/hero.jpg" alt="" />
+            <input [(ngModel)]="name" class="input-elements" type="text" nbInput placeholder="Name" fullWidth
+              shape="semi-round" />
+            <input [(ngModel)]="password" class="input-elements" type="password" nbInput placeholder="Password"
+              fullWidth shape="semi-round" />
+            <button class="input-elements" nbButton shape="semi-round" fullWidth (click)="login()">
+              Login
+            </button>
+
+            <nb-alert *ngIf="loginFailed" status="danger">
+              Wrong credentials
+            </nb-alert>
 
 
-      </nb-card-body>
-    </nb-card>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
   </nb-layout-column>
 </nb-layout>

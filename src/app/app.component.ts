@@ -9,6 +9,12 @@ import { NbIconConfig } from '@nebular/theme';
 })
 export class AppComponent {
   disabledIconConfig: NbIconConfig = { icon: 'settings-2-outline', pack: 'eva' };
+  showHeader = true;
 
+  constructor() {
 
+  }
+
+  ngOnInit() {
+  }
 }

@@ -1,1 +1,23 @@
-<p>books works!</p>
+<div class="row">
+  <div class="col-md-12 text-center">
+    <div class="books-wrapper">
+      <nb-card class="books-list">
+        <nb-card-body>
+          <nb-list>
+            <nb-list-item *ngFor="let book of books | search:searchInput">
+              <div class="book-list-item">
+                <div class="book-info">
+                  <nb-user [name]="book.name" title="TITLE" size="large"></nb-user>
+                </div>
+                <button class="details-btn" nbButton (click)="openDialog(book)">Details</button>
+              </div>
+            </nb-list-item>
+          </nb-list>
+          <div class="btn-more-container">
+            <button size="large" status="success" hero nbButton (click)="loadMoreData()">Load more Data...</button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+  </div>

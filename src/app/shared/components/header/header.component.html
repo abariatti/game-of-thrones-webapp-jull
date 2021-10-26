@@ -1,17 +1,20 @@
 <div class="navbar-container">
 
-
-  <nb-toggle [(ngModel)]="isDarkMode" (checkedChange)="changeTheme()">Dark Mode</nb-toggle>
-
-  <div class="img-wrapper">
-    <img src="../../../../assets//img/logo.png" alt="">
+  <div class="left-side">
+    <div class="img-wrapper d-none d-sm-block">
+      <img src="../../../../assets//img/logo.png" alt="">
+    </div>
+    <nb-toggle [(ngModel)]="isDarkMode" (checkedChange)="changeTheme()"></nb-toggle>
   </div>
 
-  <nb-actions size="small" fullWidth>
-    <nb-action class="user-action">
-      <nb-user size="large" name="Johannes" title="Pioneer" badgeText="active" badgeStatus="success"
-        badgePosition="bottom right">
-      </nb-user>
-    </nb-action>
-  </nb-actions>
+  <div class="right-side">
+    <nb-actions size="small">
+      <nb-action class="user-action">
+        <nb-user picture="../../../../assets/img/avatar.png" size="large" [name]="username" badgeText="ONLINE"
+          badgeStatus="success" badgePosition="bottom right">
+        </nb-user>
+      </nb-action>
+      <nb-action icon="power-outline" (click)="logout()"></nb-action>
+    </nb-actions>
+  </div>
 </div>

@@ -1,3 +1,4 @@
+import { AuthService } from './../../../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 
@@ -13,20 +14,23 @@ export class LoginComponent implements OnInit {
   password = "";
   loginFailed = false;
 
-  constructor(private router: Router, ) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
   }
 
   login() {
-    if (this.password === '123456') {
+    let result = this.authService.login(this.name, this.password);
+    if (result) {
       // login successful
-      localStorage.setItem("loggedin", "true");
-      this.router.navigate(["/home"]);
+      console.log("login successful");
 
+      this.router.navigate(["/"]);
     } else {
       this.loginFailed = true;
     }
+
+
   }
 
 }

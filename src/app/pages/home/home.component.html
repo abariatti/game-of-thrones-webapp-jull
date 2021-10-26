@@ -1,38 +1,36 @@
 <!-- SEARCH INPUT FIELD -->
 <div class="row">
-  <div class="col-md-12">
-
-    <div class="form-wrapper">
-      <nb-actions size="giant" fullWidth>
-        <nb-action icon="arrow-back" (click)="onUpdateActiveResource('backward')">
-        </nb-action>
-      </nb-actions>
-      <nb-form-field>
-        <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
-        <input id="search-input" type="text" nbInput [(ngModel)]="searchInput" name="searchInput" fullWidth
-          fieldSize="giant" [placeholder]="'Search for anything in ' + resource">
-      </nb-form-field>
-      <nb-actions size="giant" fullWidth>
-        <nb-action icon="arrow-forward" (click)="onUpdateActiveResource('forward')">
-        </nb-action>
-      </nb-actions>
-    </div>
+  <div class="col-md-2 col-6  order-1 flex items-right">
+    <nb-actions size="giant">
+      <nb-action icon="arrow-back" (click)="onUpdateActiveResource('backward')">
+      </nb-action>
+    </nb-actions>
+  </div>
+  <div class="col-md-8 col-12 order-md-2 order-3 flex center-items">
+    <nb-form-field id="form-field">
+      <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+      <input id="search-input" shape="semi-round" fieldSize="giant" type="text" nbInput [(ngModel)]="searchInput"
+        name="searchInput" placeholder="Search anything">
+    </nb-form-field>
     <div class="title">
-      <h4>{{resource}}</h4>
+      <h4>{{resource.toUpperCase()}}</h4>
+    </div>
+
+    <!-- COMPONENT TO SHOW RESOURCE -->
+    <div *ngIf="activeResource === StateActiveResource.CHARACTERS">
+      <app-characters [searchInput]="searchInput"></app-characters>
+    </div>
+    <div *ngIf="activeResource === StateActiveResource.HOUSES">
+      <app-houses [searchInput]="searchInput"></app-houses>
+    </div>
+    <div *ngIf="activeResource === StateActiveResource.BOOKS">
+      <app-books [searchInput]="searchInput"></app-books>
     </div>
 
   </div>
-</div>
-
-<!-- COMPONENT TO SHOW RESOURCE -->
-<div class="col-md-12">
-  <div *ngIf="activeResource === StateActiveResource.CHARACTERS">
-    <app-characters [searchInput]="searchInput"></app-characters>
+  <div class="col-md-2 col-6 order-md-3 order-2 flex items-left">
+    <nb-actions size="giant">
+      <nb-action icon="arrow-forward" (click)="onUpdateActiveResource('forward')">
+      </nb-action>
+    </nb-actions>
   </div>
-  <div *ngIf="activeResource === StateActiveResource.HOUSES">
-    <app-houses [searchInput]="searchInput"></app-houses>
-  </div>
-  <div *ngIf="activeResource === StateActiveResource.BOOKS">
-    <app-books></app-books>
-  </div>
-</div>

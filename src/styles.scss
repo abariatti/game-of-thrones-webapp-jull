@@ -4,5 +4,16 @@
 
 @include nb-install() {
   @include nb-theme-global();
-};
+}
+
 /* You can add global styles to this file, and also import other style files */
+
+/* nb-layout .layout {
+  min-height: none;
+  height: 100%;
+  width: 100vw;
+} */
+
+.nb-theme-default {
+  width: 100%;
+}

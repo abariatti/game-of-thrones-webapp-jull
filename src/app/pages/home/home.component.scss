@@ -1,14 +1,33 @@
-.form-wrapper {
+.flex {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 
-  #search-input {
-    min-width: 400px;
-  }
+.center-items {
+  align-items: center;
+}
+
+.items-right {
+  align-items: flex-end;
+}
+
+.items-left {
+  align-items: flex-start;
+}
+
+#form-field {
+  width: 100%;
 }
 
 .title {
   display: flex;
   justify-content: center;
-  margin-bottom: 0em;
+  margin: 1em 0;
+
+  letter-spacing: 0.2em;
+
+  h4 {
+    font-weight: 100 !important;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 
 enum ActiveResource {
@@ -12,7 +12,7 @@ enum ActiveResource {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   StateActiveResource = ActiveResource;
   activeResource: ActiveResource = ActiveResource.CHARACTERS;
@@ -20,8 +20,7 @@ export class HomeComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+
 
   get resource() {
     switch (this.activeResource) {

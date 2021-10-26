@@ -1,8 +1,9 @@
+import { LayoutComponent } from './shared/components/layout/layout.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NbThemeModule, NbLayoutModule, NbActionsModule, NbIconModule, NbToggleModule, NbUserModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbActionsModule, NbIconModule, NbToggleModule, NbUserModule, NbMenuService } from '@nebular/theme';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HttpClientModule } from "@angular/common/http";
@@ -14,6 +15,7 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     HeaderComponent,
+    LayoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,7 @@ import { FormsModule } from '@angular/forms';
     NbUserModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [NbMenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,19 +1,29 @@
 .navbar-container {
   box-sizing: border-box;
-  padding: 0 1em;
+  width: 100%;
+  /*  padding: 0 1em; */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100vw;
-}
 
+  .right-side {
+    display: flex;
+    justify-content: flex-end;
+  }
 
-.img-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  .left-side {
+    display: flex;
+    justify-content: flex-start;
 
-  img {
-    height: 50px;
+    .img-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      img {
+        height: 50px;
+        margin-right: 1em;
+      }
+    }
   }
 }
