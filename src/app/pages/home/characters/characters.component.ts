@@ -1,8 +1,11 @@
+import { ResourcesService } from './../../../shared/services/resources.service';
 import { CharacterDetailsComponent } from './character-details/character-details.component';
-import { CharactersService } from './characters.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { Character } from './character';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Character, CharacterFilter } from './character';
 import { NbDialogService } from '@nebular/theme';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 
 
 @Component({
@@ -10,34 +13,57 @@ import { NbDialogService } from '@nebular/theme';
   templateUrl: './characters.component.html',
   styleUrls: ['./characters.component.scss']
 })
-export class CharactersComponent implements OnInit {
+export class CharactersComponent implements OnInit, OnDestroy {
 
   characters: Character[] = [];
-  placeholders = [];
-  pageSize = 10;
-  pageToLoadNext = 1;
   loading = false;
-  sortDirection: "asc" | "desc" | "" = "";
-  @Input() searchInput = "";
+  searchInput = "";
+  filter: CharacterFilter = {
+    status: "",
+    gender: "",
+  };
+  showLoadMoreButton = true;
+  modelChanged: Subject<string> = new Subject<string>();
 
-  constructor(private charactersService: CharactersService, private dialogService: NbDialogService) {
 
+  constructor(private resourcesService: ResourcesService, private dialogService: NbDialogService) {
+    // include debouncing for search input field to limit api requests
+    this.modelChanged.pipe(
+      debounceTime(500),
+      distinctUntilChanged())
+      .subscribe(model => {
+        this.searchInput = model;
+        this.onSearchChange(model);
+      });
   }
 
   ngOnInit(): void {
-    this.getCharacters();
+    this.resourcesService.resetCurrentPageNumber();
+    this.getResources();
+  }
+
+  ngOnDestroy(): void {
+    this.modelChanged.unsubscribe();
+  }
+
+  // when search input field value changes
+  changed(text: string) {
+    this.modelChanged.next(text);
   }
 
   // fetch characters data from api
-  getCharacters(): void {
-    this.charactersService.getCharacters()
+  getResources(): void {
+    this.resourcesService.getResources(this.filter, this.searchInput, "characters")
       .subscribe(characters => this.characters = characters);
   }
 
   // fetch more characters from api once user scrolled to end of character list
   loadMoreData(): void {
-    if (this.charactersService.currentPageNumber <= this.charactersService.pageSize) {
-      this.charactersService.getCharacters().subscribe(characters => this.characters = [...this.characters, ...characters])
+    if (this.resourcesService.currentPageNumber <= this.resourcesService.numberOfPages) {
+      this.resourcesService.getResources(this.filter, this.searchInput, "characters").subscribe(characters => this.characters = [...this.characters, ...characters])
+      if (this.resourcesService.currentPageNumber === this.resourcesService.numberOfPages) {
+        this.showLoadMoreButton = false;
+      }
     }
   }
 
@@ -55,16 +81,26 @@ export class CharactersComponent implements OnInit {
     switch (gender) {
       case "Female":
         return "../../../../assets/img/female-warrior.jpg";
-        break;
       case "Male":
         return "../../../../assets/img/male-warrior.jpg";
-        break;
       default:
         return ""
-        break;
     }
   }
 
+  // filter results
+  filterCharacters(newVal: string, target: string): void {
+    if (newVal !== this.filter[target]) {
+      this.showLoadMoreButton = true;
+      this.filter[target] = newVal;
+      this.resourcesService.resetCurrentPageNumber();
+      this.getResources();
+    }
+  }
 
+  onSearchChange(term: string) {
+    this.resourcesService.resetCurrentPageNumber();
+    this.resourcesService.getResources(this.filter, term, "characters").subscribe(characters => this.characters = characters)
+  }
 
 }

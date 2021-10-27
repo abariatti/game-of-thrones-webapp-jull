@@ -1,39 +1,74 @@
+import { ResourcesService } from './../../../shared/services/resources.service';
 import { HouseDetailsComponent } from './house-details/house-details.component';
-import { HousesService } from './houses.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { House } from './house';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { House, HouseFilter } from './house';
 import { NbDialogService } from '@nebular/theme';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-houses',
   templateUrl: './houses.component.html',
   styleUrls: ['./houses.component.scss']
 })
-export class HousesComponent implements OnInit {
+export class HousesComponent implements OnInit, OnDestroy {
 
   houses: House[] = [];
   placeholders = [];
   pageSize = 10;
   pageToLoadNext = 1;
   loading = false;
-  @Input() searchInput = "";
+  searchInput = "";
+  filter: HouseFilter = {
+    hasWords: false,
+    hasTitles: false,
+    hasSeats: false,
+    hasDiedOut: false,
+    hasAncestralWeapons: false,
+  };
+  showLoadMoreButton = true;
 
-  constructor(private housesService: HousesService, private dialogService: NbDialogService) { }
+  modelChanged: Subject<string> = new Subject<string>();
+
+  constructor(private resourcesService: ResourcesService, private dialogService: NbDialogService) {
+    // include debouncing for search input field to limit api requests
+    this.modelChanged.pipe(
+      debounceTime(500),
+      distinctUntilChanged())
+      .subscribe(model => {
+        this.searchInput = model;
+        this.onSearchChange(model);
+      });
+  }
 
   ngOnInit(): void {
+    this.resourcesService.resetCurrentPageNumber();
     this.getHouses();
+  }
+
+  ngOnDestroy(): void {
+    this.modelChanged.unsubscribe();
+  }
+
+  // when search input field value changes
+  changed(text: string) {
+    this.modelChanged.next(text);
   }
 
   // fetch characters data from api
   getHouses(): void {
-    this.housesService.getHouses()
+    this.resourcesService.getResources(this.filter, this.searchInput, "houses")
       .subscribe(houses => this.houses = houses);
   }
 
-  // fetch more characters from api once user scrolled to end of character list
+
+  // fetch more houses from api once user scrolled to end of houses list
   loadMoreData(): void {
-    if (this.housesService.currentPageNumber <= this.housesService.pageSize) {
-      this.housesService.getHouses().subscribe(houses => this.houses = [...this.houses, ...houses])
+    if (this.resourcesService.currentPageNumber <= this.resourcesService.numberOfPages) {
+      this.resourcesService.getResources(this.filter, this.searchInput, "houses").subscribe(houses => this.houses = [...this.houses, ...houses])
+      if (this.resourcesService.currentPageNumber === this.resourcesService.numberOfPages) {
+        this.showLoadMoreButton = false;
+      }
     }
   }
 
@@ -44,6 +79,24 @@ export class HousesComponent implements OnInit {
 
       },
     });
+  }
+
+  // filter results
+  filterHouses(newVal: any, target: string): void {
+    console.log(newVal);
+    console.log(target);
+    if (newVal !== this.filter[target]) {
+      this.showLoadMoreButton = true;
+      this.filter[target] = newVal;
+      this.resourcesService.resetCurrentPageNumber();
+      this.getHouses();
+    }
+
+  }
+
+  onSearchChange(term: string) {
+    this.resourcesService.resetCurrentPageNumber();
+    this.resourcesService.getResources(this.filter, term, "houses").subscribe(houses => this.houses = houses)
   }
 
 }

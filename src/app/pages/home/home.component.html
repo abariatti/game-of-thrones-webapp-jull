@@ -7,24 +7,16 @@
     </nb-actions>
   </div>
   <div class="col-md-8 col-12 order-md-2 order-3 flex center-items">
-    <nb-form-field id="form-field">
-      <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
-      <input id="search-input" shape="semi-round" fieldSize="giant" type="text" nbInput [(ngModel)]="searchInput"
-        name="searchInput" placeholder="Search anything">
-    </nb-form-field>
-    <div class="title">
-      <h4>{{resource.toUpperCase()}}</h4>
-    </div>
 
     <!-- COMPONENT TO SHOW RESOURCE -->
     <div *ngIf="activeResource === StateActiveResource.CHARACTERS">
-      <app-characters [searchInput]="searchInput"></app-characters>
+      <app-characters></app-characters>
     </div>
     <div *ngIf="activeResource === StateActiveResource.HOUSES">
-      <app-houses [searchInput]="searchInput"></app-houses>
+      <app-houses></app-houses>
     </div>
     <div *ngIf="activeResource === StateActiveResource.BOOKS">
-      <app-books [searchInput]="searchInput"></app-books>
+      <app-books></app-books>
     </div>
 
   </div>

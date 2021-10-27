@@ -1,10 +1,27 @@
+<nb-form-field id="form-field">
+  <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+  <input id="search-input" shape="semi-round" fieldSize="giant" type="text" nbInput [ngModel]="searchInput"
+    name="searchInput" placeholder="Search name, region or words" (ngModelChange)="changed($event)">
+</nb-form-field>
+<div class="filters">
+  <nb-checkbox class="me-2" (checkedChange)="filterHouses($event,'  hasWords')">with words</nb-checkbox>
+  <nb-checkbox class="me-2" (checkedChange)="filterHouses($event,'hasTitles')">with titles</nb-checkbox>
+  <nb-checkbox class="me-2" (checkedChange)="filterHouses($event,'hasSeats')">with seats</nb-checkbox>
+  <nb-checkbox class="me-2" (checkedChange)="filterHouses($event,'hasDiedOut')">died out</nb-checkbox>
+  <nb-checkbox (checkedChange)="filterHouses($event,'hasAncestralWeapons')">with ancestral weapons</nb-checkbox>
+</div>
+<div class="title">
+  <h4>HOUSES</h4>
+</div>
+
+
 <div class="row">
   <div class="col-md-12 text-center">
     <div class="houses-wrapper">
-      <nb-card class="houses-list">
+      <nb-card class="houses-list" *ngIf="houses.length > 0">
         <nb-card-body>
           <nb-list>
-            <nb-list-item *ngFor="let house of houses | search:searchInput">
+            <nb-list-item *ngFor="let house of houses">
               <div class="house-list-item">
                 <div class="house-info">
                   <nb-user [name]="house.name" title="TITLE" size="large"></nb-user>
@@ -14,8 +31,14 @@
             </nb-list-item>
           </nb-list>
           <div class="btn-more-container">
-            <button size="large" status="success" hero nbButton (click)="loadMoreData()">Load more Data...</button>
+            <button *ngIf="showLoadMoreButton" size="large" status="success" hero nbButton (click)="loadMoreData()">Load
+              more Data...</button>
           </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card accent="danger" class="p-2" *ngIf="houses.length === 0">
+        <nb-card-body>
+          No results
         </nb-card-body>
       </nb-card>
     </div>

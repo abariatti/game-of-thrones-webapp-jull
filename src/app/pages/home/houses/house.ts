@@ -15,3 +15,15 @@ export interface House {
     cadetBranches: string[],
     swornMembers: string[],
 }
+
+export interface IObjectKeys {
+    [key: string]: string | boolean | Date | undefined;
+}
+
+export interface HouseFilter extends IObjectKeys {
+    hasWords?: boolean,
+    hasTitles?: boolean,
+    hasSeats?: boolean,
+    hasDiedOut?: boolean,
+    hasAncestralWeapons?: boolean,
+}

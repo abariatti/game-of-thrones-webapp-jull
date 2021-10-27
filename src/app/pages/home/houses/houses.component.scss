@@ -1,10 +1,38 @@
+#form-field {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.filters {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  margin: 1em 0;
+
+  letter-spacing: 0.2em;
+
+  h4 {
+    font-weight: 100 !important;
+  }
+}
+
+
+
 .houses-wrapper {
   display: flex;
   justify-content: center;
+  width: 100%;
 
   .houses-list {
     height: calc(100vh - 300px);
     max-width: 800px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 
@@ -31,4 +59,6 @@
       margin: 2em 1em;
     }
   }
+
+
 }

@@ -11,3 +11,12 @@ export interface Book {
     characters: string[],
     povCharacters: string[],
 }
+
+export interface IObjectKeys {
+    [key: string]: string | boolean | Date | undefined;
+}
+
+export interface BookFilter extends IObjectKeys {
+    fromReleaseDate?: Date,
+    toReleaseDate?: Date
+}

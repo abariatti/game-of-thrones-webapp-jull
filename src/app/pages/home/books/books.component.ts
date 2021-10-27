@@ -1,8 +1,10 @@
+import { ResourcesService } from './../../../shared/services/resources.service';
 import { BookDetailsComponent } from './book-details/book-details.component';
-import { Component, OnInit, Input } from '@angular/core';
-import { Book } from './book';
+import { Component, OnInit } from '@angular/core';
+import { Book, BookFilter } from './book';
 import { NbDialogService } from '@nebular/theme';
-import { BooksService } from './books.service';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 @Component({
@@ -13,40 +15,67 @@ import { BooksService } from './books.service';
 export class BooksComponent implements OnInit {
 
   books: Book[] = [];
-  placeholders = [];
   pageSize = 10;
-  pageToLoadNext = 1;
   loading = false;
-  @Input() searchInput = "";
+  searchInput = "";
+  filter: BookFilter = {
+  }
+  modelChanged: Subject<string> = new Subject<string>();
+  datepickerFrom: any;
+  datepickerTo: any;
 
-  constructor(private booksService: BooksService, private dialogService: NbDialogService) { }
-
-  ngOnInit(): void {
-    this.getBooks();
-    console.log("init");
-
+  constructor(private resourcesService: ResourcesService, private dialogService: NbDialogService) {
+    // include debouncing for search input field to limit api requests
+    this.modelChanged.pipe(
+      debounceTime(500),
+      distinctUntilChanged())
+      .subscribe(model => {
+        this.searchInput = model;
+        this.onSearchChange(model);
+      });
   }
 
-  // fetch characters data from api
-  getBooks(): void {
-    this.booksService.getBooks()
+  ngOnInit(): void {
+    this.resourcesService.resetCurrentPageNumber();
+    this.getResources();
+  }
+
+  // fetch books data from api
+  getResources(): void {
+    this.resourcesService.getResources(this.filter, this.searchInput, "books")
       .subscribe(books => this.books = books);
   }
 
-  // fetch more characters from api once user scrolled to end of character list
+  // fetch more books from api once user scrolled to end of book list
   loadMoreData(): void {
-    if (this.booksService.currentPageNumber <= this.booksService.pageSize) {
-      this.booksService.getBooks().subscribe(books => this.books = [...this.books, ...books])
-    }
+    /*  if (this.resourcesService.currentPageNumber <= this.resourcesService.pageSize) {
+       this.resourcesService.getResources().subscribe(books => this.books = [...this.books, ...books])
+     } */
   }
 
-  // method to open dialog window with character details
+  // method to open dialog window with book details
   openDialog(book: Book) {
     this.dialogService.open(BookDetailsComponent, {
       context: {
 
       },
     });
+  }
+
+  filterBooks(date: Date, type: string) {
+    if (type === "from") {
+      this.filter = { ...this.filter, fromReleaseDate: date }
+    } else if (type === "to") {
+      this.filter = { ...this.filter, toReleaseDate: date }
+    }
+    this.resourcesService.resetCurrentPageNumber();
+    this.getResources();
+  }
+
+
+  onSearchChange(term: string) {
+    this.resourcesService.resetCurrentPageNumber();
+    this.resourcesService.getResources(this.filter, term, "books").subscribe(books => this.books = books)
   }
 
 }

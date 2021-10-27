@@ -58,7 +58,8 @@ export class HomeComponent {
         this.activeResource--;
       }
     }
-
   }
+
+
 
 }

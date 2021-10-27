@@ -16,3 +16,12 @@ export interface Character {
     tvSeries: string[],
     playedBy: string[]
 }
+
+export interface IObjectKeys {
+    [key: string]: string | boolean | Date | undefined;
+}
+
+export interface CharacterFilter extends IObjectKeys {
+    status?: string,
+    gender?: string,
+}
