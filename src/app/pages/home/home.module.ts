@@ -5,9 +5,8 @@ import { BooksComponent } from './books/books.component';
 import { CharactersComponent } from './characters/characters.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from "./home-routing.module";
-import { NbTabsetModule, NbCardModule, NbListModule, NbButtonModule, NbInputModule, NbFormFieldModule, NbDialogModule, NbActionsModule, NbTooltipModule, NbUserModule, NbCheckboxModule, NbDatepickerModule, NbSelectModule } from '@nebular/theme';
+import { NbTabsetModule, NbCardModule, NbListModule, NbButtonModule, NbInputModule, NbFormFieldModule, NbDialogModule, NbActionsModule, NbTooltipModule, NbUserModule, NbCheckboxModule, NbDatepickerModule, NbSelectModule, NbSpinnerModule, NbAlertModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbIconModule } from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
@@ -19,7 +18,6 @@ import { BookDetailsComponent } from './books/book-details/book-details.componen
 
 @NgModule({
   declarations: [
-    HomeComponent,
     CharactersComponent,
     BooksComponent,
     HousesComponent,
@@ -48,6 +46,8 @@ import { BookDetailsComponent } from './books/book-details/book-details.componen
     NbCheckboxModule,
     NbDatepickerModule.forRoot(),
     NbSelectModule,
+    NbSpinnerModule,
+    NbAlertModule,
   ],
   providers: [
   ],

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ResourcesService } from './../../../shared/services/resources.service';
 import { HouseDetailsComponent } from './house-details/house-details.component';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
@@ -5,6 +6,8 @@ import { House, HouseFilter } from './house';
 import { NbDialogService } from '@nebular/theme';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { extractIdFromUrl } from './../../../shared/helpers/extract-id';
+
 
 @Component({
   selector: 'app-houses',
@@ -17,7 +20,7 @@ export class HousesComponent implements OnInit, OnDestroy {
   placeholders = [];
   pageSize = 10;
   pageToLoadNext = 1;
-  loading = false;
+  loading = true;
   searchInput = "";
   filter: HouseFilter = {
     hasWords: false,
@@ -30,7 +33,7 @@ export class HousesComponent implements OnInit, OnDestroy {
 
   modelChanged: Subject<string> = new Subject<string>();
 
-  constructor(private resourcesService: ResourcesService, private dialogService: NbDialogService) {
+  constructor(private resourcesService: ResourcesService, private router: Router) {
     // include debouncing for search input field to limit api requests
     this.modelChanged.pipe(
       debounceTime(500),
@@ -58,7 +61,15 @@ export class HousesComponent implements OnInit, OnDestroy {
   // fetch characters data from api
   getHouses(): void {
     this.resourcesService.getResources(this.filter, this.searchInput, "houses")
-      .subscribe(houses => this.houses = houses);
+      .subscribe(houses => {
+        this.houses = houses;
+        this.loading = false;
+        if (this.resourcesService._currentPageNumber < this.resourcesService._numberOfPages && this.searchInput === "") {
+          this.showLoadMoreButton = true;
+        } else {
+          this.showLoadMoreButton = false;
+        }
+      });
   }
 
 
@@ -72,31 +83,31 @@ export class HousesComponent implements OnInit, OnDestroy {
     }
   }
 
-  // method to open dialog window with character details
-  openDialog(house: House) {
-    this.dialogService.open(HouseDetailsComponent, {
-      context: {
-
-      },
-    });
-  }
-
   // filter results
   filterHouses(newVal: any, target: string): void {
-    console.log(newVal);
-    console.log(target);
     if (newVal !== this.filter[target]) {
-      this.showLoadMoreButton = true;
       this.filter[target] = newVal;
       this.resourcesService.resetCurrentPageNumber();
       this.getHouses();
     }
-
   }
 
   onSearchChange(term: string) {
     this.resourcesService.resetCurrentPageNumber();
+    if (term === "") {
+      this.showLoadMoreButton = true;
+    } else {
+      this.showLoadMoreButton = false;
+    }
     this.resourcesService.getResources(this.filter, term, "houses").subscribe(houses => this.houses = houses)
+  }
+
+  extractIdFromUrl(url: string): string {
+    return extractIdFromUrl(url);
+  }
+
+  onRoute(resource: string): void {
+    this.router.navigate(["/home/" + resource]);
   }
 
 }

@@ -1,1 +1,62 @@
-<p>book-details works!</p>
+<div class="row">
+  <div class="col-md-12 d-flex align-items-center justify-content-center">
+    <nb-card class="wrapper">
+      <nb-card-header> {{book.name}}</nb-card-header>
+      <nb-card-body>
+        <div *ngIf="book">
+          <nb-tabset>
+            <nb-tab tabTitle="General">
+              <div class="item" *ngIf="book.name">
+                <button nbButton outline status="primary" class="item-key">Name</button>
+                <div class="item-value me-1">{{book.name}}</div>
+              </div>
+              <div class="item" *ngIf="book.isbn">
+                <button nbButton outline status="primary" class="item-key">isbn</button>
+                <div class="item-value me-1">{{book.isbn}}</div>
+              </div>
+              <div class="item" *ngIf="book.numberOfPages">
+                <button nbButton outline status="primary" class="item-key">numberOfPages</button>
+                <div class="item-value me-1">{{book.numberOfPages}}</div>
+              </div>
+              <div class="item" *ngIf="book.publisher">
+                <button nbButton outline status="primary" class="item-key">publisher</button>
+                <div class="item-value me-1">{{book.publisher}}</div>
+              </div>
+              <div class="item" *ngIf="book.country">
+                <button nbButton outline status="primary" class="item-key">country</button>
+                <div class="item-value me-1">{{book.country}}</div>
+              </div>
+              <div class="item" *ngIf="book.mediaType">
+                <button nbButton outline status="primary" class="item-key">mediaType</button>
+                <div class="item-value me-1">{{book.mediaType}}</div>
+              </div>
+              <div class="item" *ngIf="book.released">
+                <button nbButton outline status="primary" class="item-key">released</button>
+                <div class="item-value me-1">{{book.released | date}}</div>
+              </div>
+              <div class="item" *ngIf="book.authors.length > 0">
+                <button nbButton outline status="primary" class="item-key">authors</button>
+                <div *ngFor="let author of book.authors" class="item-value me-1">{{author}}</div>
+              </div>
+            </nb-tab>
+            <nb-tab tabTitle="Content">
+              <div class="item" *ngIf="book.characters.length > 0">
+                <button nbButton outline status="primary" class="item-key">characters</button>
+                <div *ngFor="let item of characters$ | async" class="item-value me-1">{{item}}</div>
+              </div>
+              <div class="item" *ngIf="book.povCharacters.length > 0">
+                <button nbButton outline status="primary" class="item-key">povCharacters</button>
+                <div *ngFor="let item of povCharacters$ | async" class="item-value me-1">{{item}}</div>
+              </div>
+            </nb-tab>
+          </nb-tabset>
+        </div>
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton shape="semi-round" (click)="routeBack()">
+          <nb-icon icon="arrow-back"></nb-icon>Back
+        </button>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

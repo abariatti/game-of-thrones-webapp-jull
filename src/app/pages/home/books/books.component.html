@@ -1,36 +1,59 @@
-<nb-form-field id="form-field">
-  <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
-  <input id="search-input" shape="semi-round" fieldSize="giant" type="text" nbInput [(ngModel)]="searchInput"
-    name="searchInput" placeholder="Search name">
-</nb-form-field>
-<div class="filters">
-  <input shape="semi-round" nbInput placeholder="From Date" [ngModel]="datepickerFrom" [nbDatepicker]="formcontrol1"
-    (ngModelChange)="filterBooks($event, 'from')">
-  <nb-datepicker #formcontrol1></nb-datepicker>
+<div class="row">
+  <div class="col-md-2 col-6 order-1 flex items-right">
+    <nb-actions size="giant">
+      <nb-action icon="arrow-back" (click)="onRoute('houses')">
+      </nb-action>
+    </nb-actions>
+  </div>
 
-  <input shape="semi-round" nbInput placeholder="To Picker" [ngModel]="datepickerTo" [nbDatepicker]="formcontrol2"
-    (ngModelChange)="filterBooks($event, 'to')">
-  <nb-datepicker #formcontrol2></nb-datepicker>
+  <div class="col-md-8 col-12 order-md-2 order-3 flex center-items">
+    <nb-form-field id="form-field">
+      <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+      <input id="search-input" shape="semi-round" fieldSize="giant" type="text" nbInput [(ngModel)]="searchInput"
+        name="searchInput" placeholder="Search name">
+    </nb-form-field>
+    <div class="filters">
+      <input shape="semi-round" nbInput placeholder="From Date" [ngModel]="datepickerFrom" [nbDatepicker]="formcontrol1"
+        (ngModelChange)="filterBooks($event, 'from')">
+      <nb-datepicker #formcontrol1></nb-datepicker>
+
+      <input shape="semi-round" nbInput placeholder="To Picker" [ngModel]="datepickerTo" [nbDatepicker]="formcontrol2"
+        (ngModelChange)="filterBooks($event, 'to')">
+      <nb-datepicker #formcontrol2></nb-datepicker>
+    </div>
+    <div class="title">
+      <h4>BOOKS</h4>
+    </div>
+    <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary" class="books-wrapper">
+      <nb-card class="books-list" *ngIf="books.length > 0">
+        <nb-card-body>
+          <nb-list>
+            <nb-list-item *ngFor="let book of books | search:searchInput">
+              <div class="book-list-item">
+                <div class="book-info">
+                  {{book.name}}
+                </div>
+                <button class="details-btn" shape="semi-round" nbButton
+                  [routerLink]="extractIdFromUrl(book.url)">Details</button>
+              </div>
+            </nb-list-item>
+          </nb-list>
+        </nb-card-body>
+      </nb-card>
+      <nb-card accent="danger" class="p-2" *ngIf="books.length === 0">
+        <nb-card-body>
+          No results
+        </nb-card-body>
+      </nb-card>
+
+
+    </div>
+  </div>
+
+  <div class="col-md-2 col-6 order-md-3 order-2 flex items-left">
+    <nb-actions size="giant">
+      <nb-action icon="arrow-forward" (click)="onRoute('characters')">
+      </nb-action>
+    </nb-actions>
+  </div>
 </div>
-<div class="title">
-  <h4>BOOKS</h4>
-</div>
-
-
-
-<div class="books-wrapper">
-  <nb-card class="books-list">
-    <nb-card-body>
-      <nb-list>
-        <nb-list-item *ngFor="let book of books | search:searchInput">
-          <div class="book-list-item">
-            <div class="book-info">
-              <nb-user [name]="book.name" title="TITLE" size="large"></nb-user>
-            </div>
-            <button class="details-btn" nbButton (click)="openDialog(book)">Details</button>
-          </div>
-        </nb-list-item>
-      </nb-list>
-
-    </nb-card-body>
-  </nb-card>

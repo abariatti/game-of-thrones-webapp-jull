@@ -1,12 +1,10 @@
+import { Router } from '@angular/router';
 import { ResourcesService } from './../../../shared/services/resources.service';
-import { CharacterDetailsComponent } from './character-details/character-details.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Character, CharacterFilter } from './character';
-import { NbDialogService } from '@nebular/theme';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-
-
+import { extractIdFromUrl } from './../../../shared/helpers/extract-id';
 
 @Component({
   selector: 'app-characters',
@@ -16,7 +14,7 @@ import { Subject } from 'rxjs';
 export class CharactersComponent implements OnInit, OnDestroy {
 
   characters: Character[] = [];
-  loading = false;
+  loading = true;
   searchInput = "";
   filter: CharacterFilter = {
     status: "",
@@ -26,7 +24,7 @@ export class CharactersComponent implements OnInit, OnDestroy {
   modelChanged: Subject<string> = new Subject<string>();
 
 
-  constructor(private resourcesService: ResourcesService, private dialogService: NbDialogService) {
+  constructor(private resourcesService: ResourcesService, private router: Router) {
     // include debouncing for search input field to limit api requests
     this.modelChanged.pipe(
       debounceTime(500),
@@ -38,6 +36,7 @@ export class CharactersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.resourcesService.resetCurrentPageNumber();
     this.getResources();
   }
@@ -54,7 +53,15 @@ export class CharactersComponent implements OnInit, OnDestroy {
   // fetch characters data from api
   getResources(): void {
     this.resourcesService.getResources(this.filter, this.searchInput, "characters")
-      .subscribe(characters => this.characters = characters);
+      .subscribe(characters => {
+        this.characters = characters;
+        this.loading = false;
+        if (this.resourcesService._currentPageNumber < this.resourcesService._numberOfPages && this.searchInput === "") {
+          this.showLoadMoreButton = true;
+        } else {
+          this.showLoadMoreButton = false;
+        }
+      });
   }
 
   // fetch more characters from api once user scrolled to end of character list
@@ -65,15 +72,6 @@ export class CharactersComponent implements OnInit, OnDestroy {
         this.showLoadMoreButton = false;
       }
     }
-  }
-
-  // method to open dialog window with character details
-  openDialog(character: Character) {
-    this.dialogService.open(CharacterDetailsComponent, {
-      context: {
-        character: character
-      },
-    });
   }
 
   // male and female characters should display different images
@@ -91,16 +89,29 @@ export class CharactersComponent implements OnInit, OnDestroy {
   // filter results
   filterCharacters(newVal: string, target: string): void {
     if (newVal !== this.filter[target]) {
-      this.showLoadMoreButton = true;
       this.filter[target] = newVal;
       this.resourcesService.resetCurrentPageNumber();
       this.getResources();
     }
   }
 
+  // when user searches via input field, new data must be fetched from server
   onSearchChange(term: string) {
     this.resourcesService.resetCurrentPageNumber();
+    if (term === "") {
+      this.showLoadMoreButton = true;
+    } else {
+      this.showLoadMoreButton = false;
+    }
     this.resourcesService.getResources(this.filter, term, "characters").subscribe(characters => this.characters = characters)
+  }
+
+  extractIdFromUrl(url: string): string {
+    return extractIdFromUrl(url);
+  }
+
+  onRoute(resource: string): void {
+    this.router.navigate(["/home/" + resource]);
   }
 
 }

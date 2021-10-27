@@ -1,48 +1,66 @@
-<nb-form-field id="form-field">
-  <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
-  <input id="search-input" shape="semi-round" fieldSize="giant" type="text" nbInput [ngModel]="searchInput"
-    name="searchInput" placeholder="Search name or culture" (ngModelChange)="changed($event)">
-</nb-form-field>
-<div class="filters">
-  <nb-select shape="semi-round" placeholder="Status" (selectedChange)="filterCharacters($event, 'status')">
-    <nb-option value="">-</nb-option>
-    <nb-option value="isAlive">alive</nb-option>
-    <nb-option value="isDead">dead</nb-option>
-  </nb-select>
-  <nb-select shape="semi-round" placeholder="Gender" (selectedChange)="filterCharacters($event, 'gender')">
-    <nb-option value="">-</nb-option>
-    <nb-option value="female">female</nb-option>
-    <nb-option value="male">male</nb-option>
-  </nb-select>
-</div>
-<div class="title">
-  <h4>CHARACTERS</h4>
-</div>
+<div class="row">
+  <div class="col-md-2 col-6 order-1 flex items-right">
+    <nb-actions size="giant">
+      <nb-action icon="arrow-back" (click)="onRoute('books')">
+      </nb-action>
+    </nb-actions>
+  </div>
 
+  <div class="col-md-8 col-12 order-md-2 order-3 flex center-items">
+    <nb-form-field id="form-field">
+      <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+      <input id="search-input" shape="semi-round" fieldSize="giant" type="text" nbInput [ngModel]="searchInput"
+        name="searchInput" placeholder="Search name or culture" (ngModelChange)="changed($event)">
+    </nb-form-field>
+    <div class="filters">
+      <nb-select shape="semi-round" placeholder="Status" (selectedChange)="filterCharacters($event, 'status')">
+        <nb-option value="">-</nb-option>
+        <nb-option value="isAlive">alive</nb-option>
+        <nb-option value="isDead">dead</nb-option>
+      </nb-select>
+      <nb-select shape="semi-round" placeholder="Gender" (selectedChange)="filterCharacters($event, 'gender')">
+        <nb-option value="">-</nb-option>
+        <nb-option value="female">female</nb-option>
+        <nb-option value="male">male</nb-option>
+      </nb-select>
+    </div>
+    <div class="title">
+      <h4>CHARACTERS</h4>
+    </div>
 
-<div class="characters-wrapper">
-  <nb-card class="characters-list" *ngIf="characters.length > 0">
-    <nb-card-body>
-      <nb-list>
-        <nb-list-item *ngFor="let character of characters">
-          <div class="character-list-item">
-            <div class="character-info">
-              <nb-user [picture]="getImgUrl(character.gender)" [name]="character.name"
-                [title]="character.gender === 'Male' ? 'male' : 'female'" size="large"></nb-user>
-            </div>
-            <button class="details-btn" nbButton (click)="openDialog(character)">Details</button>
+    <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary" class="characters-wrapper">
+      <nb-card class="characters-list" *ngIf="characters.length > 0">
+        <nb-card-body>
+          <nb-list>
+            <nb-list-item *ngFor="let character of characters">
+              <div class="character-list-item">
+                <div class="character-info">
+                  <nb-user [picture]="getImgUrl(character.gender)" [name]="character.name"
+                    [title]="character.gender === 'Male' ? 'male' : 'female'" size="large"></nb-user>
+                </div>
+                <button class="details-btn" shape="semi-round" nbButton
+                  [routerLink]="extractIdFromUrl(character.url)">Details </button>
+              </div>
+            </nb-list-item>
+          </nb-list>
+          <div *ngIf="showLoadMoreButton" class="btn-more-container">
+            <button size="large" status="success" hero nbButton (click)="loadMoreData()">Load more Data...</button>
           </div>
-        </nb-list-item>
-      </nb-list>
-      <div *ngIf="showLoadMoreButton" class="btn-more-container">
-        <button size="large" status="success" hero nbButton (click)="loadMoreData()">Load more Data...</button>
-      </div>
-    </nb-card-body>
-  </nb-card>
-  <nb-card accent="danger" class="p-2" *ngIf="characters.length === 0">
-    <nb-card-body>
-      No results
-    </nb-card-body>
-  </nb-card>
+        </nb-card-body>
+      </nb-card>
+      <nb-card accent="danger" class="p-2" *ngIf="characters.length === 0">
+        <nb-card-body>
+          No results
+        </nb-card-body>
+      </nb-card>
 
+    </div>
+  </div>
+
+  <div class="col-md-2 col-6 order-md-3 order-2 flex items-left">
+    <nb-actions size="giant">
+      <nb-action icon="arrow-forward" (click)="onRoute('houses')">
+      </nb-action>
+    </nb-actions>
+  </div>
 </div>

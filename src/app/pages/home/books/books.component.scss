@@ -59,3 +59,85 @@
     }
   }
 }
+
+#form-field {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.filters {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  margin: 1em 0;
+
+  letter-spacing: 0.2em;
+
+  h4 {
+    font-weight: 100 !important;
+  }
+}
+
+
+
+.houses-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .houses-list {
+    height: calc(100vh - 300px);
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .house-list-item {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+
+      .house-info {
+        margin: 0 2em 1em 2em;
+      }
+
+      .details-btn {
+        margin: 0 2em;
+      }
+    }
+
+    .btn-more-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 2em 1em;
+    }
+  }
+}
+
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.center-items {
+  align-items: center;
+}
+
+.items-right {
+  align-items: flex-end;
+}
+
+.items-left {
+  align-items: flex-start;
+}

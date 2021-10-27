@@ -1,11 +1,85 @@
-<nb-card class="wrapper">
-  <nb-card-body>
-
-    <div *ngFor="let item of character | keyvalue">
-      <div *ngIf="item?.value?.length !== 0 && item?.value" class="item">
-        <button nbButton hero status="primary" class="item-key">{{item.key}}</button>
-        <div class="item-value">{{item.value}}</div>
-      </div>
-    </div>
-  </nb-card-body>
-</nb-card>
+<div class="row">
+  <div class="col-md-12 d-flex align-items-center justify-content-center">
+    <nb-card [status]="character.gender === 'Male' ? 'success' : 'danger'" class="wrapper">
+      <nb-card-header> {{character.name}}</nb-card-header>
+      <nb-card-body>
+        <div *ngIf="character">
+          <nb-tabset>
+            <nb-tab tabTitle="General">
+              <div class="item" *ngIf="character.name">
+                <button nbButton outline status="primary" class="item-key">Name</button>
+                <div class="item-value me-1">{{character.name}}</div>
+              </div>
+              <div class="item" *ngIf="character.gender">
+                <button nbButton outline status="primary" class="item-key">Gender</button>
+                <div class="item-value me-1">{{character.gender}}</div>
+              </div>
+              <div class="item" *ngIf="character.culture">
+                <button nbButton outline status="primary" class="item-key">Culture</button>
+                <div class="item-value me-1">{{character.culture}}</div>
+              </div>
+              <div class="item" *ngIf="character.born">
+                <button nbButton outline status="primary" class="item-key">born</button>
+                <div class="item-value me-1">{{character.born}}</div>
+              </div>
+              <div class="item" *ngIf="character.died">
+                <button nbButton outline status="primary" class="item-key">died</button>
+                <div class="item-value me-1">{{character.died}}</div>
+              </div>
+              <div class="item" *ngIf="character.titles.length > 0 && character.titles[0] !== ''">
+                <button nbButton outline status="primary" class="item-key">titles</button>
+                <div *ngFor="let title of character.titles" class="item-value me-1">{{title}}</div>
+              </div>
+              <div class="item" *ngIf="character.aliases.length > 0 && character.aliases[0] !== ''">
+                <button nbButton outline status="primary" class="item-key">aliases</button>
+                <div *ngFor="let alias of character.aliases" class="item-value me-1">{{alias}}</div>
+              </div>
+            </nb-tab>
+            <nb-tab tabTitle="Family">
+              <div class="item" *ngIf="father$">
+                <button nbButton outline status="primary" class="item-key">father</button>
+                <div class="item-value me-1">{{father$ | async}}</div>
+              </div>
+              <div class="item" *ngIf="character.mother">
+                <button nbButton outline status="primary" class="item-key">mother</button>
+                <div class="item-value me-1">{{mother$ | async}}</div>
+              </div>
+              <div class="item" *ngIf="character.spouse">
+                <button nbButton outline status="primary" class="item-key">spouse</button>
+                <div class="item-value me-1">{{spouse$ | async}}</div>
+              </div>
+              <div class="item" *ngIf="character.allegiances.length > 0">
+                <button nbButton outline status="primary" class="item-key">allegiances</button>
+                <div *ngFor="let allegiance of allegiances$ | async" class="item-value me-1">
+                  {{allegiance}}</div>
+              </div>
+            </nb-tab>
+            <nb-tab tabTitle="Media">
+              <div class="item" *ngIf="character.books.length > 0">
+                <button nbButton outline status="primary" class="item-key">books</button>
+                <div *ngFor="let book of books$ | async" class="item-value me-1">{{book}}</div>
+              </div>
+              <div class="item" *ngIf="character.povBooks.length > 0  && character.povBooks[0] !== ''">
+                <button nbButton outline status="primary" class="item-key">povBooks</button>
+                <div *ngFor="let povBook of character.povBooks" class="item-value me-1">{{povBook}}</div>
+              </div>
+              <div class="item" *ngIf="character.tvSeries.length > 0 && character.tvSeries[0] !== ''">
+                <button nbButton outline status="primary" class="item-key">tvSeries</button>
+                <div *ngFor="let tvSeries of character.tvSeries" class="item-value me-1">{{tvSeries}}</div>
+              </div>
+              <div class="item" *ngIf="character.playedBy.length > 0 && character.playedBy[0] !== ''">
+                <button nbButton outline status="primary" class="item-key">playedBy</button>
+                <div *ngFor="let item of character.playedBy" class="item-value me-1">{{item}}</div>
+              </div>
+            </nb-tab>
+          </nb-tabset>
+        </div>
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton shape="semi-round" (click)="routeBack()">
+          <nb-icon icon="arrow-back"></nb-icon>Back
+        </button>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

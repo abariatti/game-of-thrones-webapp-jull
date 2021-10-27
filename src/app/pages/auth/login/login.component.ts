@@ -23,8 +23,6 @@ export class LoginComponent implements OnInit {
     let result = this.authService.login(this.name, this.password);
     if (result) {
       // login successful
-      console.log("login successful");
-
       this.router.navigate(["/"]);
     } else {
       this.loginFailed = true;

@@ -1,32 +1,39 @@
-<nb-form-field id="form-field">
-  <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
-  <input id="search-input" shape="semi-round" fieldSize="giant" type="text" nbInput [ngModel]="searchInput"
-    name="searchInput" placeholder="Search name, region or words" (ngModelChange)="changed($event)">
-</nb-form-field>
-<div class="filters">
-  <nb-checkbox class="me-2" (checkedChange)="filterHouses($event,'  hasWords')">with words</nb-checkbox>
-  <nb-checkbox class="me-2" (checkedChange)="filterHouses($event,'hasTitles')">with titles</nb-checkbox>
-  <nb-checkbox class="me-2" (checkedChange)="filterHouses($event,'hasSeats')">with seats</nb-checkbox>
-  <nb-checkbox class="me-2" (checkedChange)="filterHouses($event,'hasDiedOut')">died out</nb-checkbox>
-  <nb-checkbox (checkedChange)="filterHouses($event,'hasAncestralWeapons')">with ancestral weapons</nb-checkbox>
-</div>
-<div class="title">
-  <h4>HOUSES</h4>
-</div>
-
-
 <div class="row">
-  <div class="col-md-12 text-center">
-    <div class="houses-wrapper">
+  <div class="col-md-2 col-6 order-1 flex items-right">
+    <nb-actions size="giant">
+      <nb-action icon="arrow-back" (click)="onRoute('characters')">
+      </nb-action>
+    </nb-actions>
+  </div>
+
+  <div class="col-md-8 col-12 order-md-2 order-3 flex center-items">
+    <nb-form-field id="form-field">
+      <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+      <input id="search-input" shape="semi-round" fieldSize="giant" type="text" nbInput [ngModel]="searchInput"
+        name="searchInput" placeholder="Search name, region or words" (ngModelChange)="changed($event)">
+    </nb-form-field>
+    <div class="filters">
+      <nb-checkbox class="me-2" (checkedChange)="filterHouses($event,'  hasWords')">with words</nb-checkbox>
+      <nb-checkbox class="me-2" (checkedChange)="filterHouses($event,'hasTitles')">with titles</nb-checkbox>
+      <nb-checkbox class="me-2" (checkedChange)="filterHouses($event,'hasSeats')">with seats</nb-checkbox>
+      <nb-checkbox class="me-2" (checkedChange)="filterHouses($event,'hasDiedOut')">died out</nb-checkbox>
+      <nb-checkbox (checkedChange)="filterHouses($event,'hasAncestralWeapons')">with ancestral weapons</nb-checkbox>
+    </div>
+    <div class="title">
+      <h4>HOUSES</h4>
+    </div>
+
+    <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary" class="houses-wrapper">
       <nb-card class="houses-list" *ngIf="houses.length > 0">
         <nb-card-body>
           <nb-list>
             <nb-list-item *ngFor="let house of houses">
               <div class="house-list-item">
                 <div class="house-info">
-                  <nb-user [name]="house.name" title="TITLE" size="large"></nb-user>
+                  {{house.name}}
                 </div>
-                <button class="details-btn" nbButton (click)="openDialog(house)">Details</button>
+                <button class="details-btn" shape="semi-round" nbButton
+                  [routerLink]="extractIdFromUrl(house.url)">Details</button>
               </div>
             </nb-list-item>
           </nb-list>
@@ -44,3 +51,12 @@
     </div>
 
   </div>
+
+  <div class="col-md-2 col-6 order-md-3 order-2 flex items-left">
+    <nb-actions size="giant">
+      <nb-action icon="arrow-forward" (click)="onRoute('books')">
+      </nb-action>
+    </nb-actions>
+  </div>
+
+</div>

@@ -1,11 +1,10 @@
+import { Router } from '@angular/router';
 import { ResourcesService } from './../../../shared/services/resources.service';
-import { BookDetailsComponent } from './book-details/book-details.component';
 import { Component, OnInit } from '@angular/core';
 import { Book, BookFilter } from './book';
-import { NbDialogService } from '@nebular/theme';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-
+import { extractIdFromUrl } from './../../../shared/helpers/extract-id';
 
 @Component({
   selector: 'app-books',
@@ -16,7 +15,7 @@ export class BooksComponent implements OnInit {
 
   books: Book[] = [];
   pageSize = 10;
-  loading = false;
+  loading = true;
   searchInput = "";
   filter: BookFilter = {
   }
@@ -24,7 +23,7 @@ export class BooksComponent implements OnInit {
   datepickerFrom: any;
   datepickerTo: any;
 
-  constructor(private resourcesService: ResourcesService, private dialogService: NbDialogService) {
+  constructor(private resourcesService: ResourcesService, private router: Router) {
     // include debouncing for search input field to limit api requests
     this.modelChanged.pipe(
       debounceTime(500),
@@ -43,23 +42,10 @@ export class BooksComponent implements OnInit {
   // fetch books data from api
   getResources(): void {
     this.resourcesService.getResources(this.filter, this.searchInput, "books")
-      .subscribe(books => this.books = books);
-  }
-
-  // fetch more books from api once user scrolled to end of book list
-  loadMoreData(): void {
-    /*  if (this.resourcesService.currentPageNumber <= this.resourcesService.pageSize) {
-       this.resourcesService.getResources().subscribe(books => this.books = [...this.books, ...books])
-     } */
-  }
-
-  // method to open dialog window with book details
-  openDialog(book: Book) {
-    this.dialogService.open(BookDetailsComponent, {
-      context: {
-
-      },
-    });
+      .subscribe(books => {
+        this.books = books;
+        this.loading = false;
+      });
   }
 
   filterBooks(date: Date, type: string) {
@@ -76,6 +62,14 @@ export class BooksComponent implements OnInit {
   onSearchChange(term: string) {
     this.resourcesService.resetCurrentPageNumber();
     this.resourcesService.getResources(this.filter, term, "books").subscribe(books => this.books = books)
+  }
+
+  extractIdFromUrl(url: string): string {
+    return extractIdFromUrl(url);
+  }
+
+  onRoute(resource: string): void {
+    this.router.navigate(["/home/" + resource]);
   }
 
 }

@@ -59,6 +59,22 @@
       margin: 2em 1em;
     }
   }
+}
 
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 
+.center-items {
+  align-items: center;
+}
+
+.items-right {
+  align-items: flex-end;
+}
+
+.items-left {
+  align-items: flex-start;
 }

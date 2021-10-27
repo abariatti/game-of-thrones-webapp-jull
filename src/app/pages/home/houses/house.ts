@@ -5,6 +5,7 @@ export interface House {
     coatOfArms: string,
     words: string,
     titles: string[],
+    seats: string[],
     currentLord: string,
     heir: string,
     overlord: string,

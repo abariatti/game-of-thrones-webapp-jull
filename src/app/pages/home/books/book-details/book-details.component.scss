@@ -1,0 +1,17 @@
+.wrapper {
+
+  max-width: 80vw;
+  position: relative;
+
+  .item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 1em 0;
+    width: 90%;
+
+    .item-key {
+      margin-right: 2em;
+    }
+  }
+}

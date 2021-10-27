@@ -42,8 +42,6 @@ export class ResourcesService {
 
   // GET Resource from server and filter out those that have no name 
   getResources(filter: Filter, searchTerm: string, resource: "characters" | "books" | "houses"): Observable<any> {
-    console.log("filter:", filter);
-
     // construct string of all params from given filters and search term
     let params = "";
 
@@ -77,7 +75,6 @@ export class ResourcesService {
           tap(val => {
             let calculatedNumberOfPages = extractPageNumberFromHeader(val.headers.get("link"));
             if (calculatedNumberOfPages) this._numberOfPages = calculatedNumberOfPages;
-            console.log("retrieved number of pags:", this._numberOfPages);
             this._currentPageNumber++;
           }),
           map(response => response.body.filter((item: { name: string | any[]; }) => item.name.length > 0)),
@@ -143,6 +140,31 @@ export class ResourcesService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  // fetch name for a specific book, character or house
+  fetchNameFromUrl(url: string): Observable<string> {
+    return this.http.get<Character | Book | House>(url).pipe(
+      map(response => response.name)
+    )
+  }
+
+  // fetch names for an array of specific books, characters or houses
+  fetchNamesFromUrls(urls: string[]): Observable<string[]> {
+    let calls: Observable<any>[] = [];
+    urls.forEach(url => {
+      calls.push(this.http.get<any>(url));
+    });
+    return forkJoin(calls).pipe(
+      map(response => {
+        let res = response.map(r => r.name)
+        return res;
+      }),
+    )
+  }
+
+  fetchResourceById(id: string, resource: string): Observable<Character & House & Book> {
+    return this.http.get<Character & House & Book>(`${this._url}${resource}/${id}`);
   }
 
 
