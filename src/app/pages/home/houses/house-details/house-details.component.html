@@ -1,82 +1,88 @@
-<div class="row">
-  <div class="col-md-12 d-flex align-items-center justify-content-center">
-    <nb-card class="wrapper">
-      <nb-card-header> {{house.name}}</nb-card-header>
-      <nb-card-body>
-        <div *ngIf="house">
-          <nb-tabset>
-            <nb-tab tabTitle="General">
-              <div class="item" *ngIf="house.name">
-                <button nbButton outline status="primary" class="item-key">Name</button>
-                <div class="item-value me-1">{{house.name}}</div>
-              </div>
-              <div class="item" *ngIf="house.region">
-                <button nbButton outline status="primary" class="item-key">region</button>
-                <div class="item-value me-1">{{house.region}}</div>
-              </div>
-              <div class="item" *ngIf="house.coatOfArms">
-                <button nbButton outline status="primary" class="item-key">coatOfArms</button>
-                <div class="item-value me-1">{{house.coatOfArms}}</div>
-              </div>
-              <div class="item" *ngIf="house.words">
-                <button nbButton outline status="primary" class="item-key">words</button>
-                <div class="item-value me-1">{{house.words}}</div>
-              </div>
-              <div class="item" *ngIf="house.titles.length > 0">
-                <button nbButton outline status="primary" class="item-key">titles</button>
-                <div *ngFor="let title of house.titles" class="item-value me-1">{{title}}</div>
-              </div>
-              <div class="item" *ngIf="house.seats.length > 0">
-                <button nbButton outline status="primary" class="item-key">seats</button>
-                <div *ngFor="let seat of house.seats" class="item-value me-1">{{seat}}</div>
-              </div>
-              <div class="item" *ngIf="house.founded">
-                <button nbButton outline status="primary" class="item-key">founded</button>
-                <div class="item-value me-1">{{house.founded}}</div>
-              </div>
-              <div class="item" *ngIf="house.diedOut">
-                <button nbButton outline status="primary" class="item-key">diedOut</button>
-                <div class="item-value me-1">{{house.diedOut}}</div>
-              </div>
-              <div class="item" *ngIf="house.ancestralWeapons.length > 0">
-                <button nbButton outline status="primary" class="item-key">ancestralWeapons</button>
-                <div *ngFor="let weapon of house.ancestralWeapons" class="item-value me-1">{{weapon}}</div>
-              </div>
-              <div class="item" *ngIf="house.cadetBranches.length > 0">
-                <button nbButton outline status="primary" class="item-key">cadetBranches</button>
-                <div *ngFor="let branch of house.cadetBranches" class="item-value me-1">{{branch}}</div>
-              </div>
-            </nb-tab>
-            <nb-tab tabTitle="Persons">
-              <div class="item" *ngIf="house.currentLord">
-                <button nbButton outline status="primary" class="item-key">currentLord</button>
-                <div class="item-value me-1">{{currentLord$ | async}}</div>
-              </div>
-              <div class="item" *ngIf="house.founder">
-                <button nbButton outline status="primary" class="item-key">founder</button>
-                <div class="item-value me-1">{{founder$ | async}}</div>
-              </div>
-              <div class="item" *ngIf="house.heir">
-                <button nbButton outline status="primary" class="item-key">heir</button>
-                <div class="item-value me-1">{{heir$ | async}}</div>
-              </div>
-              <div class="item" *ngIf="house.overlord">
-                <button nbButton outline status="primary" class="item-key">overlord</button>
-                <div class="item-value me-1">{{overlord$ | async}}</div>
-              </div>
-              <div class="item" *ngIf="house.swornMembers.length > 0">
-                <button nbButton outline status="primary" class="item-key">swornMembers</button>
-                <div *ngFor="let member of swornMembers$ | async" class="item-value me-1">{{member}}</div>
-              </div>
-            </nb-tab>
-          </nb-tabset>
-        </div>
-      </nb-card-body>
-      <nb-card-footer>
-        <button nbButton shape="semi-round" (click)="routeBack()">
-          <nb-icon icon="arrow-back"></nb-icon>Back
-        </button>
-      </nb-card-footer>
-    </nb-card>
-  </div>
+<div>
+  <button nbButton shape="semi-round" outline status="primary" (click)="routeBack()">
+    <nb-icon icon="arrow-back"></nb-icon>Back
+  </button>
 </div>
+<nb-tabset fullWidth>
+  <nb-tab tabTitle="General">
+    <div class="row">
+      <div class="col-md-12" *ngIf="house.name">
+        <info-card title="Name" [info]="house.name">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="house.region">
+        <info-card title="Region" [info]="house.region">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="house.coatOfArms">
+        <info-card title="Coat of arms" [info]="house.coatOfArms">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="house.words">
+        <info-card title="Words" [info]="house.words">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="house.titles[0] !== ''">
+        <info-card title=" Titles" [items]="house.titles">
+          <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="house.seats[0] !== ''">
+        <info-card title="Seats" [items]="house.seats">
+          <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="house.founded">
+        <info-card title="Founded" [info]="house.founded">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="house.diedOut">
+        <info-card title="Died Out" [info]="house.diedOut">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="house.ancestralWeapons[0]!==''">
+        <info-card title="Ancestral Weapons" [items]="house.ancestralWeapons">
+          <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="house.cadetBranches[0] !== ''">
+        <info-card title="Cadet Branches" [items]="house.cadetBranches">
+          <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
+        </info-card>
+      </div>
+    </div>
+  </nb-tab>
+  <nb-tab tabTitle="Persons">
+    <div class="col-md-12" *ngIf="house.currentLord">
+      <info-card title="Current Lord" [info]="currentLord">
+        <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+      </info-card>
+    </div>
+    <div class="col-md-12" *ngIf="founder">
+      <info-card title="Founder" [info]="founder">
+        <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+      </info-card>
+    </div>
+    <div class="col-md-12" *ngIf="heir">
+      <info-card title="Heir" [info]="heir">
+        <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+      </info-card>
+    </div>
+    <div class="col-md-12" *ngIf="overLord">
+      <info-card title="Overlord" [info]="overLord">
+        <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+      </info-card>
+    </div>
+    <div class="col-md-12" *ngIf="swornMembers[0] !== ''">
+      <info-card title="Sworn members" [items]="swornMembers">
+        <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
+      </info-card>
+    </div>
+  </nb-tab>
+</nb-tabset>

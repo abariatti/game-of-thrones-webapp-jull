@@ -1,15 +1,14 @@
 import { Router } from '@angular/router';
 import { ResourcesService } from './../../../shared/services/resources.service';
-import { HouseDetailsComponent } from './house-details/house-details.component';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { House, HouseFilter } from './house';
-import { NbDialogService } from '@nebular/theme';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { extractIdFromUrl } from './../../../shared/helpers/extract-id';
 
 
 @Component({
+  // moduleId: module.id,
   selector: 'app-houses',
   templateUrl: './houses.component.html',
   styleUrls: ['./houses.component.scss']

@@ -16,9 +16,9 @@ export class BookDetailsComponent implements OnInit {
   constructor(private resourcesService: ResourcesService, private route: ActivatedRoute, private _location: Location) { }
 
   book!: Book;
-  characters$!: Observable<string[]>;
-  povCharacters$!: Observable<string[]>;
   id: string | null = "";
+  characters: string[] = [];
+  povCharacters: string[] = [];
 
   ngOnInit(): void {
 
@@ -27,10 +27,10 @@ export class BookDetailsComponent implements OnInit {
       this.resourcesService.fetchResourceById(this.id, "books").subscribe(book => {
         this.book = book;
         if (this.book.characters && this.book.characters.length > 0) {
-          this.characters$ = this.fetchNamesFromUrls(this.book.characters);
+          this.fetchNamesFromUrls(this.book.characters).toPromise().then(res => this.characters = res);
         }
         if (this.book.povCharacters && this.book.povCharacters.length > 0) {
-          this.povCharacters$ = this.fetchNamesFromUrls(this.book.povCharacters);
+          this.fetchNamesFromUrls(this.book.povCharacters).toPromise().then(res => this.povCharacters = res);
         }
       })
     }

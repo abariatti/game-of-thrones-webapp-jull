@@ -1,0 +1,15 @@
+<nb-card [class.multiple]="items.length > 0">
+  <div class="icon-container">
+    <div class="icon status-primary">
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <div *ngIf="items.length === 0" class="details">
+    <div class="title h5"> {{title}} </div>
+    <div class="status paragraph-2"> {{info}} </div>
+  </div>
+  <div *ngIf="items.length > 0" class="details">
+    <div class="title h5"> {{title}} </div>
+    <div class="status paragraph-2" *ngFor="let item of items"> {{item}} </div>
+  </div>
+</nb-card>

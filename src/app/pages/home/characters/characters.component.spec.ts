@@ -1,5 +1,6 @@
+import { FormsModule } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CharactersComponent } from './characters.component';
 
 describe('CharactersComponent', () => {
@@ -8,9 +9,11 @@ describe('CharactersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CharactersComponent ]
+      imports: [FormsModule],
+      declarations: [CharactersComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,16 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HousesComponent } from './houses.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('HousesComponent', () => {
-  let component: HousesComponent;
-  let fixture: ComponentFixture<HousesComponent>;
+  let component: any;
+  let fixture: any;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HousesComponent ]
+      declarations: [HousesComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

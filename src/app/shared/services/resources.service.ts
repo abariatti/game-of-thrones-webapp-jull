@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, } from "@angular/common/http";
 import { Observable, of, forkJoin } from "rxjs";
 import { catchError, map, tap, take } from 'rxjs/operators';
-import { extractPageNumberFromHeader } from 'src/app/shared/helpers/extract-page-numbers-from-header';
+import { extractPageNumberFromHeader } from '../helpers/extract-page-numbers-from-header';
 import { formatDate } from '../helpers/format-date';
 
 type Filter = CharacterFilter & BookFilter & HouseFilter;

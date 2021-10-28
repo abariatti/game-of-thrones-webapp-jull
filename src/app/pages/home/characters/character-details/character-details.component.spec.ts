@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CharacterDetailsComponent } from './character-details.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('CharacterDetailsComponent', () => {
   let component: CharacterDetailsComponent;
@@ -8,9 +8,10 @@ describe('CharacterDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CharacterDetailsComponent ]
+      declarations: [CharacterDetailsComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

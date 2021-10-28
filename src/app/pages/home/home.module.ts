@@ -1,3 +1,4 @@
+import { InfoCardComponent } from './../../shared/components/info-card/info-card.component';
 import { SortPipe } from './../../shared/pipes/sort.pipe';
 import { SearchPipe } from './../../shared/pipes/filter.pipe';
 import { HousesComponent } from './houses/houses.component';
@@ -26,6 +27,7 @@ import { BookDetailsComponent } from './books/book-details/book-details.componen
     CharacterDetailsComponent,
     HouseDetailsComponent,
     BookDetailsComponent,
+    InfoCardComponent,
   ],
   imports: [
     CommonModule,
@@ -48,7 +50,7 @@ import { BookDetailsComponent } from './books/book-details/book-details.componen
     NbSelectModule,
     NbSpinnerModule,
     NbAlertModule,
-    NbAutocompleteModule
+    NbAutocompleteModule,
   ],
   providers: [
   ],

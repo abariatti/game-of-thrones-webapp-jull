@@ -1,62 +1,65 @@
-<div class="row">
-  <div class="col-md-12 d-flex align-items-center justify-content-center">
-    <nb-card class="wrapper">
-      <nb-card-header> {{book.name}}</nb-card-header>
-      <nb-card-body>
-        <div *ngIf="book">
-          <nb-tabset>
-            <nb-tab tabTitle="General">
-              <div class="item" *ngIf="book.name">
-                <button nbButton outline status="primary" class="item-key">Name</button>
-                <div class="item-value me-1">{{book.name}}</div>
-              </div>
-              <div class="item" *ngIf="book.isbn">
-                <button nbButton outline status="primary" class="item-key">isbn</button>
-                <div class="item-value me-1">{{book.isbn}}</div>
-              </div>
-              <div class="item" *ngIf="book.numberOfPages">
-                <button nbButton outline status="primary" class="item-key">numberOfPages</button>
-                <div class="item-value me-1">{{book.numberOfPages}}</div>
-              </div>
-              <div class="item" *ngIf="book.publisher">
-                <button nbButton outline status="primary" class="item-key">publisher</button>
-                <div class="item-value me-1">{{book.publisher}}</div>
-              </div>
-              <div class="item" *ngIf="book.country">
-                <button nbButton outline status="primary" class="item-key">country</button>
-                <div class="item-value me-1">{{book.country}}</div>
-              </div>
-              <div class="item" *ngIf="book.mediaType">
-                <button nbButton outline status="primary" class="item-key">mediaType</button>
-                <div class="item-value me-1">{{book.mediaType}}</div>
-              </div>
-              <div class="item" *ngIf="book.released">
-                <button nbButton outline status="primary" class="item-key">released</button>
-                <div class="item-value me-1">{{book.released | date}}</div>
-              </div>
-              <div class="item" *ngIf="book.authors.length > 0">
-                <button nbButton outline status="primary" class="item-key">authors</button>
-                <div *ngFor="let author of book.authors" class="item-value me-1">{{author}}</div>
-              </div>
-            </nb-tab>
-            <nb-tab tabTitle="Content">
-              <div class="item" *ngIf="book.characters.length > 0">
-                <button nbButton outline status="primary" class="item-key">characters</button>
-                <div *ngFor="let item of characters$ | async" class="item-value me-1">{{item}}</div>
-              </div>
-              <div class="item" *ngIf="book.povCharacters.length > 0">
-                <button nbButton outline status="primary" class="item-key">povCharacters</button>
-                <div *ngFor="let item of povCharacters$ | async" class="item-value me-1">{{item}}</div>
-              </div>
-            </nb-tab>
-          </nb-tabset>
-        </div>
-      </nb-card-body>
-      <nb-card-footer>
-        <button nbButton shape="semi-round" (click)="routeBack()">
-          <nb-icon icon="arrow-back"></nb-icon>Back
-        </button>
-      </nb-card-footer>
-    </nb-card>
-  </div>
+<div>
+  <button nbButton shape="semi-round" outline status="primary" (click)="routeBack()">
+    <nb-icon icon="arrow-back"></nb-icon>Back
+  </button>
 </div>
+<nb-tabset fullWidth>
+  <nb-tab tabTitle="General">
+    <div class="row">
+      <div class="col-md-12" *ngIf="book.name">
+        <info-card title="Name" [info]="book.name">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="book.isbn">
+        <info-card title="Isbn" [info]="book.isbn">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="book.numberOfPages">
+        <info-card title="Number of Pages" [info]="book.numberOfPages">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="book.publisher">
+        <info-card title="Publisher" [info]="book.publisher">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="book.country">
+        <info-card title="Country" [info]="book.country">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="book.mediaType">
+        <info-card title="Media type" [info]="book.mediaType">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="book.released">
+        <info-card title="Released" [info]="book.released.toString()">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="book.authors[0] !== ''">
+        <info-card title="Authors" [items]="book.authors">
+          <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
+        </info-card>
+      </div>
+    </div>
+  </nb-tab>
+  <nb-tab tabTitle="Content">
+
+    <div class="col-md-12" *ngIf="characters.length > 0 && characters[0] !== ''">
+      <info-card title="Characters" [items]="characters">
+        <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
+      </info-card>
+    </div>
+    <div class="col-md-12" *ngIf="povCharacters.length > 0 && povCharacters[0] !== ''">
+      <info-card title="POV Books" [items]="povCharacters">
+        <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
+      </info-card>
+    </div>
+
+  </nb-tab>
+</nb-tabset>

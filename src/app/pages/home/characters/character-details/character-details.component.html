@@ -1,85 +1,75 @@
-<div class="row">
-  <div class="col-md-12 d-flex align-items-center justify-content-center">
-    <nb-card [status]="character.gender === 'Male' ? 'success' : 'danger'" class="wrapper">
-      <nb-card-header> {{character.name}}</nb-card-header>
-      <nb-card-body>
-        <div *ngIf="character">
-          <nb-tabset>
-            <nb-tab tabTitle="General">
-              <div class="item" *ngIf="character.name">
-                <button nbButton outline status="primary" class="item-key">Name</button>
-                <div class="item-value me-1">{{character.name}}</div>
-              </div>
-              <div class="item" *ngIf="character.gender">
-                <button nbButton outline status="primary" class="item-key">Gender</button>
-                <div class="item-value me-1">{{character.gender}}</div>
-              </div>
-              <div class="item" *ngIf="character.culture">
-                <button nbButton outline status="primary" class="item-key">Culture</button>
-                <div class="item-value me-1">{{character.culture}}</div>
-              </div>
-              <div class="item" *ngIf="character.born">
-                <button nbButton outline status="primary" class="item-key">born</button>
-                <div class="item-value me-1">{{character.born}}</div>
-              </div>
-              <div class="item" *ngIf="character.died">
-                <button nbButton outline status="primary" class="item-key">died</button>
-                <div class="item-value me-1">{{character.died}}</div>
-              </div>
-              <div class="item" *ngIf="character.titles.length > 0 && character.titles[0] !== ''">
-                <button nbButton outline status="primary" class="item-key">titles</button>
-                <div *ngFor="let title of character.titles" class="item-value me-1">{{title}}</div>
-              </div>
-              <div class="item" *ngIf="character.aliases.length > 0 && character.aliases[0] !== ''">
-                <button nbButton outline status="primary" class="item-key">aliases</button>
-                <div *ngFor="let alias of character.aliases" class="item-value me-1">{{alias}}</div>
-              </div>
-            </nb-tab>
-            <nb-tab tabTitle="Family">
-              <div class="item" *ngIf="father$">
-                <button nbButton outline status="primary" class="item-key">father</button>
-                <div class="item-value me-1">{{father$ | async}}</div>
-              </div>
-              <div class="item" *ngIf="character.mother">
-                <button nbButton outline status="primary" class="item-key">mother</button>
-                <div class="item-value me-1">{{mother$ | async}}</div>
-              </div>
-              <div class="item" *ngIf="character.spouse">
-                <button nbButton outline status="primary" class="item-key">spouse</button>
-                <div class="item-value me-1">{{spouse$ | async}}</div>
-              </div>
-              <div class="item" *ngIf="character.allegiances.length > 0">
-                <button nbButton outline status="primary" class="item-key">allegiances</button>
-                <div *ngFor="let allegiance of allegiances$ | async" class="item-value me-1">
-                  {{allegiance}}</div>
-              </div>
-            </nb-tab>
-            <nb-tab tabTitle="Media">
-              <div class="item" *ngIf="character.books.length > 0">
-                <button nbButton outline status="primary" class="item-key">books</button>
-                <div *ngFor="let book of books$ | async" class="item-value me-1">{{book}}</div>
-              </div>
-              <div class="item" *ngIf="character.povBooks.length > 0  && character.povBooks[0] !== ''">
-                <button nbButton outline status="primary" class="item-key">povBooks</button>
-                <div *ngFor="let povBook of character.povBooks" class="item-value me-1">{{povBook}}</div>
-              </div>
-              <div class="item" *ngIf="character.tvSeries.length > 0 && character.tvSeries[0] !== ''">
-                <button nbButton outline status="primary" class="item-key">tvSeries</button>
-                <div *ngFor="let tvSeries of character.tvSeries" class="item-value me-1">{{tvSeries}}</div>
-              </div>
-              <div class="item" *ngIf="character.playedBy.length > 0 && character.playedBy[0] !== ''">
-                <button nbButton outline status="primary" class="item-key">playedBy</button>
-                <div *ngFor="let item of character.playedBy" class="item-value me-1">{{item}}</div>
-              </div>
-            </nb-tab>
-          </nb-tabset>
-        </div>
-      </nb-card-body>
-      <nb-card-footer>
-        <button nbButton shape="semi-round" (click)="routeBack()">
-          <nb-icon icon="arrow-back"></nb-icon>Back
-        </button>
-      </nb-card-footer>
-    </nb-card>
-  </div>
+<div>
+  <button nbButton shape="semi-round" outline status="primary" (click)="routeBack()">
+    <nb-icon icon="arrow-back"></nb-icon>Back
+  </button>
 </div>
+<nb-tabset fullWidth>
+  <nb-tab tabTitle="General">
+    <div class="row">
+      <div class="col-md-12" *ngIf="character.name">
+        <info-card title="Name" [info]="character.name">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="character.gender">
+        <info-card title=" Gender" [info]="character.gender">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="character.born">
+        <info-card title="Born" [info]="character.born">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="character.died">
+        <info-card title="Died" [info]="character.died">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="character.aliases[0] !== ''">
+        <info-card title="Aliases" [items]="character.aliases">
+          <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="books[0] !== ''">
+        <info-card title="Books" [items]="books">
+          <nb-icon icon="arrowhead-down-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="character.povBooks[0] !== ''">
+        <info-card title="POV Books" [items]="character.povBooks">
+          <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="character.playedBy">
+        <info-card title="Played By" [items]="character.playedBy">
+          <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
+        </info-card>
+      </div>
+    </div>
+  </nb-tab>
+  <nb-tab tabTitle="Family">
+    <div class="row">
+      <div class="col-md-12" *ngIf="father">
+        <info-card title="Father" [info]="father">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="mother">
+        <info-card title="Mother" [info]="mother">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="spouse">
+        <info-card title="Spouse" [info]="spouse">
+          <nb-icon class="w-100 h-100" icon="arrow-circle-right-outline"></nb-icon>
+        </info-card>
+      </div>
+      <div class="col-md-12" *ngIf="allegiances[0] !== ''">
+        <info-card title="Allegiances" [items]="allegiances">
+          <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
+        </info-card>
+      </div>
+    </div>
+  </nb-tab>
+</nb-tabset>

@@ -99,8 +99,8 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
-              "src/app/@theme/styles/styles.scss",
               "src/styles.scss",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
             ],
             "scripts": []
           }

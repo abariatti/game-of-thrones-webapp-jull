@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 
+
 @Component({
   selector: 'app-character-details',
   templateUrl: './character-details.component.html',
@@ -14,13 +15,13 @@ import { Location } from '@angular/common';
 export class CharacterDetailsComponent implements OnInit {
 
   character!: Character;
-  father$!: Observable<string>;
-  mother$!: Observable<string>;
-  spouse$!: Observable<string>;
+  father!: string;
+  mother!: string;
+  spouse!: string;
   books$!: Observable<string[]>;
-  allegiances$!: Observable<string[]>;
   id: string | null = "";
-
+  books: string[] = [];
+  allegiances: string[] = [];
 
   constructor(private resourcesService: ResourcesService, private route: ActivatedRoute, private _location: Location) { }
 
@@ -32,20 +33,21 @@ export class CharacterDetailsComponent implements OnInit {
       this.resourcesService.fetchResourceById(this.id, "characters").subscribe(character => {
         this.character = character;
         if (this.character.father) {
-          this.father$ = this.fetchNameFromUrl(this.character.father);
+          this.fetchNameFromUrl(this.character.father).toPromise().then(res => this.father = res);
         }
         if (this.character.mother) {
-          this.mother$ = this.fetchNameFromUrl(this.character.mother);
+          this.fetchNameFromUrl(this.character.mother).toPromise().then(res => this.mother = res);;
         }
         if (this.character.spouse) {
-          this.spouse$ = this.fetchNameFromUrl(this.character.spouse);
+          this.fetchNameFromUrl(this.character.spouse).toPromise().then(res => this.spouse = res);;
         }
 
         if (this.character.books && this.character.books.length > 0) {
-          this.books$ = this.fetchNamesFromUrls(this.character.books);
+          //this.books$ = this.fetchNamesFromUrls(this.character.books);
+          this.fetchNamesFromUrls(this.character.books).toPromise().then(res => this.books = res)
         }
         if (this.character.allegiances && this.character.allegiances.length > 0) {
-          this.allegiances$ = this.fetchNamesFromUrls(this.character.allegiances);
+          this.fetchNamesFromUrls(this.character.allegiances).toPromise().then(res => this.allegiances = res);;
         }
 
       })

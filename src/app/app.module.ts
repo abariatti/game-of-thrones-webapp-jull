@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NbThemeModule, NbLayoutModule, NbActionsModule, NbIconModule, NbToggleModule, NbUserModule, NbMenuService } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbActionsModule, NbIconModule, NbToggleModule, NbUserModule, NbMenuService, NbCardModule } from '@nebular/theme';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
@@ -34,6 +34,7 @@ import { FormsModule } from '@angular/forms';
     NbToggleModule,
     NbUserModule,
     FormsModule,
+    NbCardModule,
   ],
   providers: [
     NbMenuService,
@@ -42,7 +43,8 @@ import { FormsModule } from '@angular/forms';
       useClass: HttpCacheInterceptorService,
       multi: true
     },
-    CacheService
+    CacheService,
+    HttpCacheInterceptorService,
   ],
   bootstrap: [AppComponent]
 })

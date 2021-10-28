@@ -10,37 +10,9 @@
     <nb-form-field id="form-field">
       <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
       <input id="search-input" shape="semi-round" fieldSize="giant" type="text" nbInput [ngModel]="searchInput"
-        name="searchInput" placeholder="Search name or culture" (ngModelChange)="changed($event)"
-        [nbAutocomplete]="auto">
+        name="searchInput" placeholder="Search name or culture" (ngModelChange)="changed($event)">
     </nb-form-field>
-    <nb-autocomplete #auto>
 
-      <nb-option>
-        Hi
-      </nb-option>
-      <nb-option>
-        Hi
-      </nb-option>
-      <nb-option>
-        Hi
-      </nb-option>
-      <nb-option>
-        Hi
-      </nb-option>
-      <nb-option>
-        Hi
-      </nb-option>
-      <nb-option>
-        Hi
-      </nb-option>
-      <nb-option>
-        Hi
-      </nb-option>
-      <nb-option>
-        Hi
-      </nb-option>
-
-    </nb-autocomplete>
     <div class="filters">
       <nb-select shape="semi-round" placeholder="Status" (selectedChange)="filterCharacters($event, 'status')">
         <nb-option value="">-</nb-option>

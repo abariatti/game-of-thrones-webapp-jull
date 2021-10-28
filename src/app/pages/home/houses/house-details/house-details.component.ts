@@ -15,12 +15,12 @@ import { Location } from '@angular/common';
 export class HouseDetailsComponent implements OnInit {
 
   house!: House;
-  overlord$!: Observable<string>;
-  currentLord$!: Observable<string>;
-  heir$!: Observable<string>;
-  founder$!: Observable<string>;
-  swornMembers$!: Observable<string[]>;
   id: string | null = "";
+  overLord = "";
+  currentLord = "";
+  heir = "";
+  founder = "";
+  swornMembers: string[] = [];
 
   constructor(private resourcesService: ResourcesService, private route: ActivatedRoute, private _location: Location) { }
 
@@ -31,19 +31,19 @@ export class HouseDetailsComponent implements OnInit {
       this.resourcesService.fetchResourceById(this.id, "houses").subscribe(house => {
         this.house = house;
         if (this.house.overlord) {
-          this.overlord$ = this.fetchNameFromUrl(this.house.overlord);
+          this.fetchNameFromUrl(this.house.overlord).toPromise().then(res => this.overLord = res);
         }
         if (this.house.currentLord) {
-          this.currentLord$ = this.fetchNameFromUrl(this.house.currentLord);
+          this.fetchNameFromUrl(this.house.currentLord).toPromise().then(res => this.currentLord = res);
         }
         if (this.house.heir) {
-          this.heir$ = this.fetchNameFromUrl(this.house.heir);
+          this.fetchNameFromUrl(this.house.heir).toPromise().then(res => this.heir = res);
         }
         if (this.house.founder) {
-          this.founder$ = this.fetchNameFromUrl(this.house.founder);
+          this.fetchNameFromUrl(this.house.founder).toPromise().then(res => this.founder = res);
         }
         if (this.house.swornMembers && this.house.swornMembers.length > 0) {
-          this.swornMembers$ = this.fetchNamesFromUrls(this.house.swornMembers);
+          this.fetchNamesFromUrls(this.house.swornMembers).toPromise().then(res => this.swornMembers = res);
         }
       })
     }

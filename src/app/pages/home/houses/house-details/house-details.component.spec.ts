@@ -1,6 +1,8 @@
+import { FormsModule } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HouseDetailsComponent } from './house-details.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('HouseDetailsComponent', () => {
   let component: HouseDetailsComponent;
@@ -8,9 +10,11 @@ describe('HouseDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HouseDetailsComponent ]
+      declarations: [HouseDetailsComponent],
+      imports: [FormsModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
