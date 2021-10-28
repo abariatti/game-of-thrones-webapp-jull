@@ -24,6 +24,7 @@ export class CharactersComponent implements OnInit, OnDestroy {
   modelChanged: Subject<string> = new Subject<string>();
 
 
+
   constructor(private resourcesService: ResourcesService, private router: Router) {
     // include debouncing for search input field to limit api requests
     this.modelChanged.pipe(

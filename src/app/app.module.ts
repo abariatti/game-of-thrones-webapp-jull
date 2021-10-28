@@ -1,3 +1,5 @@
+import { HttpCacheInterceptorService } from './shared/services/http-cache-interceptor.service';
+import { CacheService } from './shared/services/cache.service';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -6,7 +8,7 @@ import { AppComponent } from './app.component';
 import { NbThemeModule, NbLayoutModule, NbActionsModule, NbIconModule, NbToggleModule, NbUserModule, NbMenuService } from '@nebular/theme';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FormsModule } from '@angular/forms';
 
@@ -33,7 +35,15 @@ import { FormsModule } from '@angular/forms';
     NbUserModule,
     FormsModule,
   ],
-  providers: [NbMenuService],
+  providers: [
+    NbMenuService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpCacheInterceptorService,
+      multi: true
+    },
+    CacheService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

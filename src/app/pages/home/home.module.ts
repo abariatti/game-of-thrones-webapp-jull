@@ -6,7 +6,7 @@ import { CharactersComponent } from './characters/characters.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from "./home-routing.module";
-import { NbTabsetModule, NbCardModule, NbListModule, NbButtonModule, NbInputModule, NbFormFieldModule, NbDialogModule, NbActionsModule, NbTooltipModule, NbUserModule, NbCheckboxModule, NbDatepickerModule, NbSelectModule, NbSpinnerModule, NbAlertModule } from '@nebular/theme';
+import { NbTabsetModule, NbCardModule, NbListModule, NbButtonModule, NbInputModule, NbFormFieldModule, NbDialogModule, NbActionsModule, NbTooltipModule, NbUserModule, NbCheckboxModule, NbDatepickerModule, NbSelectModule, NbSpinnerModule, NbAlertModule, NbAutocompleteModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbIconModule } from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
@@ -48,6 +48,7 @@ import { BookDetailsComponent } from './books/book-details/book-details.componen
     NbSelectModule,
     NbSpinnerModule,
     NbAlertModule,
+    NbAutocompleteModule
   ],
   providers: [
   ],
