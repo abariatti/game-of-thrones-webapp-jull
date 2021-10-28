@@ -3,7 +3,12 @@
     <nb-icon icon="arrow-back"></nb-icon>Back
   </button>
 </div>
-<nb-tabset fullWidth>
+
+<div *ngIf="loading" class="w-100 h-100" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+</div>
+
+<nb-tabset fullWidth *ngIf="!loading">
   <nb-tab tabTitle="General">
     <div class="row">
       <div class="col-md-12" *ngIf="book.name">
@@ -49,7 +54,6 @@
     </div>
   </nb-tab>
   <nb-tab tabTitle="Content">
-
     <div class="col-md-12" *ngIf="characters.length > 0 && characters[0] !== ''">
       <info-card title="Characters" [items]="characters">
         <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>

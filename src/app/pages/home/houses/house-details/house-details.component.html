@@ -3,7 +3,10 @@
     <nb-icon icon="arrow-back"></nb-icon>Back
   </button>
 </div>
-<nb-tabset fullWidth>
+<div *ngIf="loading" class="w-100 h-100" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+</div>
+<nb-tabset *ngIf="!loading" fullWidth>
   <nb-tab tabTitle="General">
     <div class="row">
       <div class="col-md-12" *ngIf="house.name">

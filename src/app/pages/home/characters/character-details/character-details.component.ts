@@ -22,6 +22,7 @@ export class CharacterDetailsComponent implements OnInit {
   id: string | null = "";
   books: string[] = [];
   allegiances: string[] = [];
+  loading = true;
 
   constructor(private resourcesService: ResourcesService, private route: ActivatedRoute, private _location: Location) { }
 
@@ -32,6 +33,7 @@ export class CharacterDetailsComponent implements OnInit {
     if (this.id) {
       this.resourcesService.fetchResourceById(this.id, "characters").subscribe(character => {
         this.character = character;
+        this.loading = false;
         if (this.character.father) {
           this.fetchNameFromUrl(this.character.father).toPromise().then(res => this.father = res);
         }

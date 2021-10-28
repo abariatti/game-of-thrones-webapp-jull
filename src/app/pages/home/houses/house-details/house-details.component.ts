@@ -21,6 +21,7 @@ export class HouseDetailsComponent implements OnInit {
   heir = "";
   founder = "";
   swornMembers: string[] = [];
+  loading = true;
 
   constructor(private resourcesService: ResourcesService, private route: ActivatedRoute, private _location: Location) { }
 
@@ -30,6 +31,7 @@ export class HouseDetailsComponent implements OnInit {
     if (this.id) {
       this.resourcesService.fetchResourceById(this.id, "houses").subscribe(house => {
         this.house = house;
+        this.loading = false;
         if (this.house.overlord) {
           this.fetchNameFromUrl(this.house.overlord).toPromise().then(res => this.overLord = res);
         }

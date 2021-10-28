@@ -3,7 +3,10 @@
     <nb-icon icon="arrow-back"></nb-icon>Back
   </button>
 </div>
-<nb-tabset fullWidth>
+<div *ngIf="loading" class="w-100 h-100" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+</div>
+<nb-tabset *ngIf="!loading" fullWidth>
   <nb-tab tabTitle="General">
     <div class="row">
       <div class="col-md-12" *ngIf="character.name">
@@ -33,7 +36,7 @@
       </div>
       <div class="col-md-12" *ngIf="books[0] !== ''">
         <info-card title="Books" [items]="books">
-          <nb-icon icon="arrowhead-down-outline"></nb-icon>
+          <nb-icon class="w-100 h-100" icon="arrowhead-down-outline"></nb-icon>
         </info-card>
       </div>
       <div class="col-md-12" *ngIf="character.povBooks[0] !== ''">

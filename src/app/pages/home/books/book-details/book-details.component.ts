@@ -19,6 +19,7 @@ export class BookDetailsComponent implements OnInit {
   id: string | null = "";
   characters: string[] = [];
   povCharacters: string[] = [];
+  loading = true;
 
   ngOnInit(): void {
 
@@ -26,6 +27,7 @@ export class BookDetailsComponent implements OnInit {
     if (this.id) {
       this.resourcesService.fetchResourceById(this.id, "books").subscribe(book => {
         this.book = book;
+        this.loading = false;
         if (this.book.characters && this.book.characters.length > 0) {
           this.fetchNamesFromUrls(this.book.characters).toPromise().then(res => this.characters = res);
         }
