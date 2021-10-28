@@ -14,10 +14,6 @@ export class InfoCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log("title", this.title);
-    console.log("info", this.info);
-    console.log("items", this.items);
-
   }
 
 }

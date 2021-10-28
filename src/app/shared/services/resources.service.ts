@@ -135,8 +135,6 @@ export class ResourcesService {
 
       console.error(error);
 
-      console.log(`${operation} failed: ${error.message}`);
-
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };

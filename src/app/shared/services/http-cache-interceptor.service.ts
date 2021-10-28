@@ -16,10 +16,8 @@ export class HttpCacheInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
-    console.log("INTERCEPTOR HOOKED IN");
     const cachedResponse = this.cacheService.getCache(req) || null;
     if (cachedResponse) {
-      console.log("response from cache!");
       return of(cachedResponse);
     }
 
@@ -27,7 +25,6 @@ export class HttpCacheInterceptorService implements HttpInterceptor {
       tap(event => {
         if (event instanceof HttpResponse) {
           this.cacheService.setCache(req, event);
-          console.log("response from server");
         }
       })
     )
