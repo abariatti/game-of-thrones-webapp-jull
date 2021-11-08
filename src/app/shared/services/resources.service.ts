@@ -1,12 +1,12 @@
-import { BookFilter, Book } from './../../pages/home/books/book';
-import { HouseFilter, House } from './../../pages/home/houses/house';
-import { Character, CharacterFilter } from './../../pages/home/characters/character';
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-import { HttpClient, } from "@angular/common/http";
-import { Observable, of, forkJoin } from "rxjs";
-import { catchError, map, tap, take } from 'rxjs/operators';
+import { forkJoin, Observable, of } from "rxjs";
+import { catchError, map, take, tap } from 'rxjs/operators';
 import { extractPageNumberFromHeader } from '../helpers/extract-page-numbers-from-header';
 import { formatDate } from '../helpers/format-date';
+import { Book, BookFilter } from './../../pages/home/books/book';
+import { Character, CharacterFilter } from './../../pages/home/characters/character';
+import { House, HouseFilter } from './../../pages/home/houses/house';
 
 type Filter = CharacterFilter & BookFilter & HouseFilter;
 
@@ -15,7 +15,7 @@ type Filter = CharacterFilter & BookFilter & HouseFilter;
 })
 export class ResourcesService {
 
-  _currentPageNumber = 1;
+  _currentPageNumber = 0;
   _pageSize = 50; // max size 50 stated on https://anapioficeandfire.com/Documentation
   _url = "https://www.anapioficeandfire.com/api/";
   _numberOfPages: number = 10;
@@ -37,7 +37,7 @@ export class ResourcesService {
 
   // this is useful when filter or search input changes -> next api call will start at page 1
   resetCurrentPageNumber() {
-    this._currentPageNumber = 1;
+    this._currentPageNumber = 0;
   }
 
   // GET Resource from server and filter out those that have no name 

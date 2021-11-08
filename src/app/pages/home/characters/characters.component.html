@@ -10,7 +10,7 @@
     <nb-form-field id="form-field">
       <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
       <input id="search-input" shape="semi-round" fieldSize="giant" type="text" nbInput [ngModel]="searchInput"
-        name="searchInput" placeholder="Search name or culture" (ngModelChange)="changed($event)">
+        name="searchInput" placeholder="Search name" (ngModelChange)="changed($event)">
     </nb-form-field>
 
     <div class="filters">
@@ -32,8 +32,19 @@
     <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary" class="characters-wrapper">
       <nb-card class="characters-list" *ngIf="characters.length > 0">
         <nb-card-body>
+          <div *ngIf="searchInput" class="search-input-info">
+            You searched for: <span class="search-text">{{ searchInput}}</span>.<br>
+            <span *ngIf="searchInput && currentPageNumber < numberOfPages ">
+              Can't find what you are looking for? You can try -> <button ghost nbButton (click)="loadMoreData()">Loading more characters! </button>
+            </span>
+            <br>
+          </div>
+          <div  class="search-input-info">
+            So far we loaded <span *ngIf="showLoadMoreButton"><b>{{ currentPageNumber * 50 }} </b>out of <b>{{ numberOfPages * 50 }}</b> total characters</span>
+            <span *ngIf="!showLoadMoreButton">All available characters</span>
+          </div>
           <nb-list>
-            <nb-list-item *ngFor="let character of characters">
+            <nb-list-item *ngFor="let character of characters | search:searchInput">
               <div class="character-list-item">
                 <div class="character-info">
                   <nb-user [picture]="getImgUrl(character.gender)" [name]="character.name"
@@ -45,7 +56,7 @@
             </nb-list-item>
           </nb-list>
           <div *ngIf="showLoadMoreButton" class="btn-more-container">
-            <button size="large" status="success" hero nbButton (click)="loadMoreData()">Load more Data...</button>
+            <button size="large" status="success" hero nbButton (click)="loadMoreData()">Load more characters...</button>
           </div>
         </nb-card-body>
       </nb-card>

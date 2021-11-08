@@ -1,10 +1,10 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ResourcesService } from './../../../shared/services/resources.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Character, CharacterFilter } from './character';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { extractIdFromUrl } from './../../../shared/helpers/extract-id';
+import { ResourcesService } from './../../../shared/services/resources.service';
+import { Character, CharacterFilter } from './character';
 
 @Component({
   selector: 'app-characters',
@@ -20,9 +20,7 @@ export class CharactersComponent implements OnInit, OnDestroy {
     status: "",
     gender: "",
   };
-  showLoadMoreButton = true;
   modelChanged: Subject<string> = new Subject<string>();
-
 
 
   constructor(private resourcesService: ResourcesService, private router: Router) {
@@ -32,8 +30,19 @@ export class CharactersComponent implements OnInit, OnDestroy {
       distinctUntilChanged())
       .subscribe(model => {
         this.searchInput = model;
-        this.onSearchChange(model);
       });
+  }
+
+  get currentPageNumber() {
+    return this.resourcesService.currentPageNumber;
+  }
+
+  get numberOfPages() {
+    return this.resourcesService.numberOfPages;
+  }
+
+  get showLoadMoreButton() {
+    return this.resourcesService.currentPageNumber < this.resourcesService.numberOfPages;
   }
 
   ngOnInit(): void {
@@ -57,33 +66,13 @@ export class CharactersComponent implements OnInit, OnDestroy {
       .subscribe(characters => {
         this.characters = characters;
         this.loading = false;
-        if (this.resourcesService._currentPageNumber < this.resourcesService._numberOfPages && this.searchInput === "") {
-          this.showLoadMoreButton = true;
-        } else {
-          this.showLoadMoreButton = false;
-        }
       });
   }
 
   // fetch more characters from api once user scrolled to end of character list
   loadMoreData(): void {
     if (this.resourcesService.currentPageNumber <= this.resourcesService.numberOfPages) {
-      this.resourcesService.getResources(this.filter, this.searchInput, "characters").subscribe(characters => this.characters = [...this.characters, ...characters])
-      if (this.resourcesService.currentPageNumber === this.resourcesService.numberOfPages) {
-        this.showLoadMoreButton = false;
-      }
-    }
-  }
-
-  // male and female characters should display different images
-  getImgUrl(gender: string): string {
-    switch (gender) {
-      case "Female":
-        return "../../../../assets/img/female-warrior.jpg";
-      case "Male":
-        return "../../../../assets/img/male-warrior.jpg";
-      default:
-        return ""
+      this.resourcesService.getResources(this.filter, '', "characters").subscribe(characters => this.characters = [...this.characters, ...characters])
     }
   }
 
@@ -96,15 +85,17 @@ export class CharactersComponent implements OnInit, OnDestroy {
     }
   }
 
-  // when user searches via input field, new data must be fetched from server
-  onSearchChange(term: string) {
-    this.resourcesService.resetCurrentPageNumber();
-    if (term === "") {
-      this.showLoadMoreButton = true;
-    } else {
-      this.showLoadMoreButton = false;
+
+  // male and female characters should display different images
+  getImgUrl(gender: string): string {
+    switch (gender) {
+      case "Female":
+        return "../../../../assets/img/female-warrior.jpg";
+      case "Male":
+        return "../../../../assets/img/male-warrior.jpg";
+      default:
+        return ""
     }
-    this.resourcesService.getResources(this.filter, term, "characters").subscribe(characters => this.characters = characters)
   }
 
   extractIdFromUrl(url: string): string {
